@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+    db:
+        image: mariadb:11.0.2
+        restart: unless-stopped
+        environment:
+            MARIADB_ROOT_PASSWORD: secret
+            MARIADB_DATABASE: ${DB_DATABASE}
+            MARIADB_USER: ${DB_USERNAME}
+            MARIADB__PASSWORD: ${DB_PASSWORD}
+        ports:
+            - "3306:3306"
+        volumes:
+            - db_data_sportMatter:/var/lib/mysql
+        networks:
+            - app-network
+volumes:
+    db_data_sportMatter:
+        driver: local
+networks:
+    app-network:
+        driver: bridge
