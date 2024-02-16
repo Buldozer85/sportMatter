@@ -1,6 +1,22 @@
 version: '3.8'
 
 services:
+    app:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        container_name: ${APP_NAME}
+        restart: unless-stopped
+        tty: true
+        volumes:
+            - .:/var/www/
+        ports:
+            - "8000:80"
+        environment:
+            - APP_ENV=local
+            - APP_DEBUG=true
+        networks:
+            - app-network
     db:
         image: mariadb:11.0.2
         restart: unless-stopped
