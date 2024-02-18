@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\App\HockeyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::controller(HockeyController::class)->prefix('/hokej')->group(function () {
+        Route::get('/', 'index')->name('hockey.index');
+    });
+
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('hockey.index');
 });

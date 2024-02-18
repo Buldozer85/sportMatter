@@ -14,6 +14,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Blade::componentNamespace("App\\View\\Components\\App", "app");
         Blade::componentNamespace("App\\View\\Components\\Admin", "admin");
+
+        \Livewire\Livewire::forceAssetInjection();
     }
 
     /**
