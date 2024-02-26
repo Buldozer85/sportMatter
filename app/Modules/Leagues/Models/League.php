@@ -8,7 +8,7 @@ use App\Helpers\Enums\CastTypeEnum;
 use App\Helpers\Enums\SportTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 
-class League extends Model
+class League extends Model implements \Illuminate\Database\ConnectionInterface
 {
     public const ATTR_ID = 'id';
 
@@ -47,5 +47,23 @@ class League extends Model
     public function getId(): int
     {
         return $this->getAttributeValue(self::ATTR_ID);
+    }
+
+    /**
+     * @param array<array-key, mixed> $data
+     * @return void
+     */
+    public function compactFill(array $data): void
+    {
+        $this->setName($data[self::ATTR_NAME]);
+    }
+
+    /**
+     * @param string $name
+     * @return void
+     */
+    public function setName(string $name): void
+    {
+        $this->setAttribute(self::ATTR_NAME, $name);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Leagues\Repositories;
+namespace App\Modules\Leagues\Contracts;
 
 use Illuminate\Contracts\Database\Query\Builder;
 
