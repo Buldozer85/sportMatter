@@ -4,14 +4,15 @@ services:
     app:
         build:
             context: .
-            dockerfile: ./Dockerfile
+            dockerfile:  ./Dockerfile
         container_name: ${APP_NAME}
         restart: unless-stopped
         tty: true
         volumes:
-            - .:/var/www/
+            - ./:/var/www/
         ports:
-            - "8000:80"
+            - "80:8000"
+            - "5173:5173"
         environment:
             - APP_ENV=local
             - APP_DEBUG=true
