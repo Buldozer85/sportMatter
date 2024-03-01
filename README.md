@@ -14,8 +14,11 @@ Pro jednoduché spuštění aplikace na lokálním vývojovém prostředí je za
 5. Zbuildění projektu bude chvíli trvat, můžete si mezitím připravit kávu
 6. Po dokončení buildění by měly běžet 2 kontejnery sportMatter a db
 7. Následně je potřeba spustit tyto příkazy:
-   1. <b>docker-compose exec app php artisan key:generate</b>
-8. Dále je potřeba zapnout vite server příkazem <b>docker-compose exec app npm run dev</b>
-9. Aplikace by měla být viditelná na adrese [localhost](http://localhost)
-10. V případě chybové hlášky typu permissions denied spustit příkaz <b>docker-compose exec app php artisan:optimize</b>, který vymaže starou cache aplikace
+    1. <b>docker-compose exec app composer dump-autoload</b>
+    2. <b>docker-compose exec app composer install</b>
+    3. <b>docker-compose exec app php artisan key:generate</b>
+    4. <b>docker-compose exec app php npm install</b>
+9. Dále je potřeba zapnout vite server příkazem <b>docker-compose exec app npm run dev</b>
+10. Aplikace by měla být viditelná na adrese [localhost](http://localhost)
+11. V případě chybové hlášky typu permissions denied spustit příkaz <b>docker-compose exec app php artisan:optimize</b>, který vymaže starou cache aplikace
 
