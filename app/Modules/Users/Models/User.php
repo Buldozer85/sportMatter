@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -89,5 +90,10 @@ class User extends Authenticatable
     public function fullName(): Attribute
     {
         return Attribute::make(get: fn() => $this->getFirstName() . ' ' . $this->getLastName());
+    }
+
+    public function bannerCredentials(): Attribute
+    {
+        return Attribute::make(get: fn() => Str::charAt($this->getFirstName(), 0) . Str::charAt($this->getLastName(), 0));
     }
 }
