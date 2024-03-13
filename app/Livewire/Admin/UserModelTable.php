@@ -9,5 +9,5 @@ class UserModelTable extends AbstractModelTable
 {
    protected string $model = User::class;
 
-   protected string $view = "livewire.admin.user-model-table";
+   protected string $view = 'livewire.admin.user-model-table';
 }

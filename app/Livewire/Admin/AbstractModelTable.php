@@ -10,11 +10,12 @@ use Livewire\WithPagination;
 abstract class AbstractModelTable extends Component
 {
     use WithPagination;
+
     protected string $model = Model::class;
 
     protected int $perPage = 25;
 
-    protected string $view = "";
+    protected string $view = '';
 
     protected function basicQuery(): Builder
     {
