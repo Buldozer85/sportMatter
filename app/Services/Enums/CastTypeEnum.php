@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Helpers\Enums;
+namespace App\Services\Enums;
+
+use App\enums\Role;
 
 enum CastTypeEnum
 {
@@ -17,4 +19,6 @@ enum CastTypeEnum
     public const JSON = 'json';
 
     public const HASHED = 'hashed';
+
+    public const ROLE = Role::class;
 }
