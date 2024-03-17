@@ -66,7 +66,7 @@ class User extends Authenticatable
         self::ATTR_EMAIL => CastTypeEnum::STRING,
         self::ATTR_EMAIL_VERIFIED_AT => CastTypeEnum::DATETIME,
         self::ATTR_PASSWORD => CastTypeEnum::HASHED,
-        self::ATTR_ACCESS => CastTypeEnum::ROLE
+        self::ATTR_ACCESS => CastTypeEnum::ROLE,
     ];
 
     /**
@@ -87,7 +87,7 @@ class User extends Authenticatable
         return $this->getAttributeValue(self::ATTR_LAST_NAME);
     }
 
-    public function fullName(): Attribute
+    public function getFullName(): Attribute
     {
         return Attribute::make(get: fn() => $this->getFirstName() . ' ' . $this->getLastName());
     }

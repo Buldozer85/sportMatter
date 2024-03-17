@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Modules\Users\Controllers\AuthAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +19,7 @@ Route::controller(DashboardController::class)->middleware('admin')->group(functi
    Route::get('/', 'index')->name('dashboard.index');
 });
 
-Route::controller(AuthController::class)->group(function () {
+Route::controller(AuthAdminController::class)->group(function () {
         Route::get('/prihlasit', 'showLogin')->name('show-login');
         Route::post('/login', 'login')->middleware('guest')->name('login');
         Route::get('logout', 'logut')->middleware('admin')->name('logout');

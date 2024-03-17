@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\App\Auth\AuthController;
 use App\Http\Controllers\App\HockeyController;
+use App\Modules\Users\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
