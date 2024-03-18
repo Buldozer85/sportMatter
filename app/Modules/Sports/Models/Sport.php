@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Sports\Models;
 
-use App\Helpers\Enums\CastTypeEnum;
 use App\Helpers\Enums\SportTypeEnum;
+use App\Services\Enums\CastTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 
 final class Sport extends Model

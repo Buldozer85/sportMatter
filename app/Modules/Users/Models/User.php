@@ -6,6 +6,7 @@ namespace App\Modules\Users\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\enums\Role;
 use App\Services\Enums\CastTypeEnum;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -87,7 +88,7 @@ class User extends Authenticatable
         return $this->getAttributeValue(self::ATTR_LAST_NAME);
     }
 
-    public function getFullName(): Attribute
+    public function fullName(): Attribute
     {
         return Attribute::make(get: fn() => $this->getFirstName() . ' ' . $this->getLastName());
     }
@@ -95,5 +96,10 @@ class User extends Authenticatable
     public function bannerCredentials(): Attribute
     {
         return Attribute::make(get: fn() => Str::charAt($this->getFirstName(), 0) . Str::charAt($this->getLastName(), 0));
+    }
+
+    public function isSuperAdmin(): Attribute
+    {
+        return Attribute::make(get: fn() => $this->access->value === Role::SUPER_ADMINISTRATOR->value);
     }
 }

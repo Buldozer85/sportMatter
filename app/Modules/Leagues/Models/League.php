@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Modules\Leagues\Models;
 
-use App\Helpers\Enums\CastTypeEnum;
+
 use App\Helpers\Enums\SportTypeEnum;
+use App\Services\Enums\CastTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 
-class League extends Model implements \Illuminate\Database\ConnectionInterface
+class League extends Model
 {
     public const ATTR_ID = 'id';
 

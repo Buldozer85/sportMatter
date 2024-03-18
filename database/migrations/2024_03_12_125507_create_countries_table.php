@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
 
             $table->string('name');
-            $table->string('shot_name');
+            $table->string('short_name');
 
             $table->timestamps();
         });
