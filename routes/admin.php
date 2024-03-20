@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Modules\Users\Controllers\AuthAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(DashboardController::class)->group(function () {
-   Route::get('/', 'index')->name('dashboard.index');
+Route::middleware('admin')->group(function () {
+    Route::controller(DashboardController::class)->middleware('admin')->group(function () {
+        Route::get('/', 'index')->name('dashboard.index');
+        Route::get('/uzivatele', 'users')->name('dashboard.users');
+        Route::get('/zeme', 'countries')->name('dashboard.countries');
+        Route::get('/ligy', 'leagues')->name('dashboard.leagues');
+        Route::get('zapasy', 'games')->name('dashboard.games');
+        Route::get('/hraci', 'players')->name('dashboard.players');
+        Route::get('/rozhodci', 'referees')->name('dashboard.referees');
+        Route::get('/sezony', 'seasons')->name('dashboard.seasons');
+        Route::get('/sporty', 'sports')->name('dashboard.sports');
+        Route::get('/stadiony', 'stadiums')->name('dashboard.stadiums');
+        Route::get('/tymy', 'teams')->name('dashboard.teams');
+    });
+});
+
+
+
+
+
+Route::controller(AuthAdminController::class)->group(function () {
+        Route::get('/prihlasit', 'showLogin')->name('show-login');
+        Route::post('/login', 'login')->middleware('guest')->name('login');
+        Route::get('logout', 'logut')->middleware('admin')->name('logout');
 });
