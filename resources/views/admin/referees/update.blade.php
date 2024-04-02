@@ -1,13 +1,14 @@
 <x-admin::layouts.dashboard title="Upravit rozhodčího">
-    <form method="post">
+    <form action="{{ route('admin.referees.update', $referee->id) }}" method="post">
+        @csrf
         <h1 class="text-center font-bold text-xl">Upravit rozhodčího</h1>
         <div class="flex flex-col mb-4 mt-5">
             <div class="flex flex-row gap-5">
                 <div class="w-6/12">
-                    <x-admin.forms.input type="text" name="first_name" id="first_name" label="Jméno"/>
+                    <x-admin.forms.input type="text" name="first_name" id="first_name" label="Jméno" value="{{ $referee->first_name }}"/>
                 </div>
                 <div class="w-6/12">
-                    <x-admin.forms.input type="text" name="last_name" id="last_name" label="Přijmení"/>
+                    <x-admin.forms.input type="text" name="last_name" id="last_name" label="Přijmení" value="{{ $referee->last_name }}"/>
                 </div>
             </div>
             <div class="flex flex-row gap-5">
@@ -16,9 +17,8 @@
                         label="Sport"
                         id="sport"
                         name="sport"
-                        :options="[
-                    1 => 'Hokej',
-                  ]"
+                        :options="$sportsOptions"
+                        :selected="$referee->sport_id"
                     />
                 </div>
             </div>

@@ -4,55 +4,37 @@ declare(strict_types=1);
 
 namespace App\Modules\Teams\Models;
 
-use App\Services\Enums\CastTypeEnum;
+use App\Modules\Leagues\Models\League;
+use App\Modules\Seasons\Models\Season;
+use App\Modules\Stadiums\Models\Stadium;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $short_name
+ * @property int $league_id
+ * @property int $stadium_id
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ */
 final class Team extends Model
 {
-    public const ATTR_ID = 'id';
-
-    public const ATTR_NAME = 'name';
-
-    public const ATTR_SHORT_NAME = 'short_name';
-
-    public const ATTR_LEAGUE_ID = 'league_id';
-
-    public const ATTR_STADIUM_ID = 'stadium_id';
-
-    public const ATTR_CREATED_AT = Model::CREATED_AT;
-
-    public const ATTR_UPDATED_AT = Model::UPDATED_AT;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        self::ATTR_NAME,
-        self::ATTR_SHORT_NAME,
-        self::ATTR_LEAGUE_ID,
-        self::ATTR_STADIUM_ID,
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        self::ATTR_NAME => CastTypeEnum::DATETIME,
-        self::ATTR_SHORT_NAME => CastTypeEnum::DATETIME,
-        self::ATTR_LEAGUE_ID => CastTypeEnum::INTEGER,
-        self::ATTR_STADIUM_ID => CastTypeEnum::INTEGER,
-    ];
-
-    /**
-     * @param array<array-key, mixed> $data
-     * @return void
-     */
-    public function compactFill(array $data): void
+    public function stadium(): BelongsTo
     {
-        return;
+        return $this->belongsTo(Stadium::class);
+    }
+
+    public function seasons(): BelongsToMany
+    {
+        return $this->belongsToMany(Season::class, 'season_has_teams');
+    }
+
+    public function league(): BelongsTo
+    {
+        return $this->belongsTo(League::class);
     }
 }

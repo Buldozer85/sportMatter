@@ -33,4 +33,11 @@ abstract class AbstractModelTable extends Component
 
         return view($this->view)->with(['data' => $data]);
     }
+
+    public function delete(string $id)
+    {
+        $record = $this->model::query()->find($id);
+
+        $record->delete();
+    }
 }

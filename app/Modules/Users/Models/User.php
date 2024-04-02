@@ -8,6 +8,7 @@ namespace App\Modules\Users\Models;
 
 use App\enums\Role;
 use App\Services\Enums\CastTypeEnum;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,6 +16,18 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @property int $id
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $email
+ * @property string $password
+ * @property Role $access
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property string $full_name
+ * @property string $banner_credentials
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;

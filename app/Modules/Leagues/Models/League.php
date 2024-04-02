@@ -6,9 +6,22 @@ namespace App\Modules\Leagues\Models;
 
 
 use App\Helpers\Enums\SportTypeEnum;
+use App\Modules\Countries\Models\Country;
+use App\Modules\Sports\Models\Sport;
 use App\Services\Enums\CastTypeEnum;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property string $association
+ * @property string $name
+ * @property int $country_id
+ * @property int $sport_id
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ */
 class League extends Model
 {
     public const ATTR_ID = 'id';
@@ -21,30 +34,7 @@ class League extends Model
 
     public const ATTR_TYPE_ID = 'type_id';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        self::ATTR_NAME,
-    ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        self::ATTR_NAME => CastTypeEnum::STRING,
-        self::ATTR_ASSOCIATION_ID => CastTypeEnum::INTEGER,
-        self::ATTR_SPORT => SportTypeEnum::class,
-        self::ATTR_TYPE_ID => CastTypeEnum::INTEGER,
-    ];
-
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->getAttributeValue(self::ATTR_ID);
@@ -66,5 +56,15 @@ class League extends Model
     public function setName(string $name): void
     {
         $this->setAttribute(self::ATTR_NAME, $name);
+    }
+
+    public function sport(): BelongsTo
+    {
+        return $this->belongsTo(Sport::class);
+    }
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
     }
 }

@@ -4,51 +4,37 @@ declare(strict_types=1);
 
 namespace App\Modules\Seasons\Models;
 
+use App\Helpers\Enums\SportTypeEnum;
+use App\Modules\Leagues\Models\League;
+use App\Modules\Teams\Models\Team;
 use App\Services\Enums\CastTypeEnum;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @property int $id
+ * @property Carbon $yearStart
+ * @property Carbon $yearEnd
+ * @property int $league_id
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property boolean $is_active
+ */
 final class Season extends Model
 {
-    public const ATTR_ID = 'id';
-
-    public const ATTR_YEAR_START = 'year_start';
-
-    public const ATTR_YEAR_END = 'year_end';
-
-    public const ATTR_LEAGUE_ID = 'league_id';
-
-    public const ATTR_CREATED_AT = Model::CREATED_AT;
-
-    public const ATTR_UPDATED_AT = Model::UPDATED_AT;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        self::ATTR_YEAR_START,
-        self::ATTR_YEAR_END,
-        self::ATTR_LEAGUE_ID,
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        self::ATTR_YEAR_START => CastTypeEnum::DATETIME,
-        self::ATTR_YEAR_END => CastTypeEnum::DATETIME,
-        self::ATTR_LEAGUE_ID => CastTypeEnum::INTEGER,
-    ];
-
-    /**
-     * @param array<array-key, mixed> $data
-     * @return void
-     */
-    public function compactFill(array $data): void
+    public function league(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return;
+        return $this->belongsTo(League::class);
     }
+
+    public function teams(): BelongsToMany
+    {
+        return $this->belongsToMany(Team::class, 'season_has_teams');
+    }
+
+    protected $casts = [
+        'yearEnd' => 'date',
+        'yearStart' => 'date'
+    ];
 }
