@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin;
 
-use App\Modules\Players\Models\Referee;
+use App\Modules\Referees\Models\Referee;
 use Livewire\Component;
 
 class RefereeModelTable extends AbstractModelTable

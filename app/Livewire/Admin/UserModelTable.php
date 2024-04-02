@@ -10,4 +10,9 @@ class UserModelTable extends AbstractModelTable
    protected string $model = User::class;
 
    protected string $view = 'livewire.admin.user-model-table';
+
+   protected function query(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+   {
+       return $this->basicQuery()->where('id', '!=', user()->id)->paginate($this->perPage);
+   }
 }

@@ -1,10 +1,15 @@
-<div class="px-4 sm:px-6 lg:px-8">
+<div class="px-4 sm:px-6 lg:px-8" x-data="{
+    openModal: false,
+    params: {
+        id: ''
+    }
+}">
     <div class="sm:flex sm:items-center">
         <div class="sm:flex-auto">
             <h1 class="text-base font-semibold leading-6 text-gray-900">Sporty</h1>
         </div>
         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <button type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Vytvořit sport</button>
+            <a href="{{ route('admin.sports.show-create') }}" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Vytvořit sport</a>
         </div>
     </div>
     <div class="mt-8 flow-root">
@@ -21,14 +26,14 @@
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                    @foreach($data as $sport) {{--TODO: upravit podle doplněné struktury--}}
+                    @foreach($data as $sport)
                     <tr>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $sport->id }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $sport->name }}</td>
 
                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Upravit<span class="sr-only">, {{ $sport->id }}</span></a>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Smazat<span class="sr-only">, {{ $sport->id }}</span></a>
+                            <a href="{{ route('admin.sports.show-update', $sport->id) }}" class="text-indigo-600 hover:text-indigo-900">Upravit<span class="sr-only">, {{ $sport->id }}</span></a>
+                            <a @click="openModal = !openModal; params.id = '{{ $sport->id  }}'" class="text-indigo-600 hover:text-indigo-900">Smazat<span class="sr-only">, {{ $sport->id }}</span></a>
                         </td>
                     </tr>
                     @endforeach
@@ -37,5 +42,6 @@
             </div>
         </div>
     </div>
+    <x-admin.modal show-variable="openModal" heading="Smazat " text="Opravdu si přejete tento záznam smazat?"></x-admin.modal>
     {{ $data->links() }}
 </div>

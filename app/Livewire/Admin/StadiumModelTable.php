@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Modules\Stadiums\Models\Stadium;
 use Livewire\Component;
 
 class StadiumModelTable extends AbstractModelTable

@@ -1,10 +1,15 @@
-<div class="px-4 sm:px-6 lg:px-8">
+<div class="px-4 sm:px-6 lg:px-8" x-data="{
+    openModal: false,
+    params: {
+        id: ''
+    }
+}">
     <div class="sm:flex sm:items-center">
         <div class="sm:flex-auto">
             <h1 class="text-base font-semibold leading-6 text-gray-900">Týmy</h1>
         </div>
         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <button type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Vytvořit tým</button>
+            <a href="{{ route('admin.teams.show-create') }}" type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Vytvořit tým</a>
         </div>
     </div>
     <div class="mt-8 flow-root">
@@ -16,26 +21,28 @@
                         <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Id</th>
                         <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Název</th>
                         <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Zkratka</th>
-                        {{--TODO: liga--}}
-                        {{--TODO: stadion--}}
-                        {{--TODO: Sport--}}
+                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Liga</th>
+                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Stadion</th>
+                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Sport</th>
+
                         <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
                             <span class="sr-only">Akce</span>
                         </th>
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                    @foreach($data as $team) {{--TODO: upravit podle doplněné struktury--}}
+                    @foreach($data as $team)
                     <tr>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $team->id }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $team->name }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $team->short_name }}</td>
-                        {{--TODO: liga--}}
-                        {{--TODO: stadion--}}
-                        {{--TODO: Sport--}}
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $team?->league->name }}</td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $team?->stadium->name }}</td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $team?->league->sport->name }}</td>
+
                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Upravit<span class="sr-only">, {{ $team->id }}</span></a>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Smazat<span class="sr-only">, {{ $team->id }}</span></a>
+                            <a href="{{ route('admin.teams.show-update', $team->id) }}" class="text-indigo-600 hover:text-indigo-900">Upravit<span class="sr-only">, {{ $team->id }}</span></a>
+                            <a @click="openModal = !openModal; params.id = '{{ $team->id  }}'" class="text-indigo-600 hover:text-indigo-900">Smazat<span class="sr-only">, {{ $team->id }}</span></a>
                         </td>
                     </tr>
                     @endforeach
@@ -44,5 +51,6 @@
             </div>
         </div>
     </div>
+    <x-admin.modal show-variable="openModal" heading="Smazat " text="Opravdu si přejete tento záznam smazat?"/>
     {{ $data->links() }}
 </div>

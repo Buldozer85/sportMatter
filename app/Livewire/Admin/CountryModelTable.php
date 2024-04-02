@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Modules\Countries\Models\Country;
 use Livewire\Component;
 
 class CountryModelTable extends AbstractModelTable
