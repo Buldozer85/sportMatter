@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 
 use App\Modules\Countries\Controllers\CountriesController;
+use App\Modules\Games\Controllers\GamesController;
 use App\Modules\Leagues\Controllers\LeaguesController;
 use App\Modules\Leagues\Models\League;
 use App\Modules\Players\Controllers\PlayersController;
@@ -104,10 +105,12 @@ Route::middleware('admin')->group(function () {
         Route::post('/update/{season}', 'update')->name('admin.seasons.update');
     });
 
-
-
-    Route::view("/vytvoritZapas", "admin.games.new");
-    Route::view("/upravitZapas/{id}", "admin.games.update");
+    Route::controller(GamesController::class)->prefix('/zapas')->group(function () {
+        Route::get('/vytvorit', 'showCreate')->name('admin.games.show-create');
+        Route::get('/{game}', 'showUpdate')->name('admin.games.show-update');
+        Route::post('/create', 'create')->name('admin.games.create');
+        Route::post('/update/{game}', 'update')->name('admin.games.update');
+    });
 });
 
 
