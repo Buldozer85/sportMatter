@@ -35,8 +35,8 @@
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $season->id }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $season->yearStart->format('Y') }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $season->yearEnd->format('Y') }}</td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $season->league->name}}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $season->teams->count()}}</td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $season->league->name}}</td>
                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                             <a href="{{ route('admin.seasons.show-update', $season->id) }}" class="text-indigo-600 hover:text-indigo-900">Upravit<span class="sr-only">, {{ $season->id }}</span></a>
                             <a @click="openModal = !openModal; params.id = '{{ $season->id }}'" class="text-indigo-600 hover:text-indigo-900">Smazat<span class="sr-only">, {{ $season->id }}</span></a>

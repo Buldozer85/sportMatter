@@ -5,7 +5,6 @@ namespace App\Livewire\Admin;
 use App\Modules\Leagues\Models\League;
 use App\Modules\Teams\Models\Team;
 use Illuminate\Database\Eloquent\Collection;
-use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
 class TeamAssigner extends Component
@@ -15,6 +14,8 @@ class TeamAssigner extends Component
 
     public array $teamOptions = [];
     public array $leaguesOptions = [];
+    public array $currentlySelectedTeams = [];
+
     public Collection $leagueTeams;
 
 
@@ -40,6 +41,7 @@ class TeamAssigner extends Component
         foreach ($teams as $team) {
             $this->teamOptions[$team->id] = $team->name . " - " . $team->league->name;
         }
+
 
         $this->leagueTeams = $selectedTeams;
 

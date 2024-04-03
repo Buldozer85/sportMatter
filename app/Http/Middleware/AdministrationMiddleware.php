@@ -12,7 +12,7 @@ class AdministrationMiddleware
     public function handle(Request $request, Closure $next)
     {
         if(is_null(Auth::user())) {
-            abort(403);
+            return redirect()->route('show-login');
         }
 
         if(Auth::user()->access->value !== Role::USER->value) {
