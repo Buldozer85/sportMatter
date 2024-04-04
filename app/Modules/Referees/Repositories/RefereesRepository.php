@@ -6,7 +6,6 @@ namespace App\Modules\Leagues\Repositories;
 
 
 use App\Modules\Leagues\Contracts\RefereesRepositoryInterface;
-use App\Modules\Players\Models\Referee;
 use App\Services\Repository\Repository;
 
 final class RefereesRepository extends Repository implements RefereesRepositoryInterface

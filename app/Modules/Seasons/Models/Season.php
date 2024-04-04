@@ -2,21 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Referees\Models;
+namespace App\Modules\Seasons\Models;
 
 use App\Services\Enums\CastTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 
-class Referee extends Model
+final class Season extends Model
 {
     public const ATTR_ID = 'id';
 
-    public const ATTR_FIRST_NAME = 'first_name';
+    public const ATTR_YEAR_START = 'year_start';
 
+    public const ATTR_YEAR_END = 'year_end';
 
-    public const ATTR_LAST_NAME = 'last_name';
-
-    public const ATTR_SPORT_ID = 'sport_id';
+    public const ATTR_LEAGUE_ID = 'league_id';
 
     public const ATTR_CREATED_AT = Model::CREATED_AT;
 
@@ -28,9 +27,9 @@ class Referee extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        self::ATTR_FIRST_NAME,
-        self::ATTR_LAST_NAME,
-        self::ATTR_SPORT_ID
+        self::ATTR_YEAR_START,
+        self::ATTR_YEAR_END,
+        self::ATTR_LEAGUE_ID,
     ];
 
     /**
@@ -39,9 +38,9 @@ class Referee extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        self::ATTR_FIRST_NAME => CastTypeEnum::STRING,
-        self::ATTR_LAST_NAME => CastTypeEnum::STRING,
-        self::ATTR_SPORT_ID => CastTypeEnum::INTEGER,
+        self::ATTR_YEAR_START => CastTypeEnum::DATETIME,
+        self::ATTR_YEAR_END => CastTypeEnum::DATETIME,
+        self::ATTR_LEAGUE_ID => CastTypeEnum::INTEGER,
     ];
 
     /**

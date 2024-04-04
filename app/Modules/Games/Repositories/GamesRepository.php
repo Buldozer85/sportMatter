@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Games\Repositories;
 
 use App\Modules\Games\Contracts\GamesRepositoryInterface;
-use App\Modules\Leagues\Contracts\RefereesRepositoryInterface;
-use App\Modules\Matches\Models\Game;
+use App\Modules\Games\Models\Game;
 use App\Services\Repository\Repository;
 use Illuminate\Support\Collection;
 
@@ -18,7 +17,7 @@ final class GamesRepository extends Repository implements GamesRepositoryInterfa
      */
     public function get(int $id): Game
     {
-        return Game::query()->where(GAME::ATTR_ID, $id)->first();
+        return Game::query()->where(Game::ATTR_ID, $id)->first();
     }
 
     /**
