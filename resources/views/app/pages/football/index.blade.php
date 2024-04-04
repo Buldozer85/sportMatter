@@ -1,4 +1,4 @@
-<x-app.app title="Hokej">
+<x-app.app title="Fotbal">
     <div class="calendar flex justify-end items-end">
         <x-app.forms.input type="date" id="date_of_match" name=""/>
     </div>

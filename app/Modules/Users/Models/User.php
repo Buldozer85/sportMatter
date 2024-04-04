@@ -115,4 +115,9 @@ class User extends Authenticatable
     {
         return Attribute::make(get: fn() => $this->access->value === Role::SUPER_ADMINISTRATOR->value);
     }
+
+    public function isAdmin(): Attribute
+    {
+        return Attribute::make(get: fn() => $this->access->value === Role::SUPER_ADMINISTRATOR->value || $this->access->value === Role::ADMINISTRATOR->value || $this->access->value === Role::EDITOR->value);
+    }
 }
