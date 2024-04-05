@@ -13,7 +13,7 @@
     @endif
 
     <div class="relative mt-1 rounded-md shadow-sm">
-        <input type="{{ $type }}" name="{{ $name }}" id="{{ $id }}" class="block w-full rounded-md border-0 py-1.5 text-red-900 ring-1 ring-inset @error($name) ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500 @enderror sm:text-sm sm:leading-6" placeholder="{{ $placeholder }}" value="{{ $value }}" aria-invalid="true" aria-describedby="{{ $id }}-error">
+        <input type="{{ $type }}" name="{{ $name }}" id="{{ $id }}" class="block w-full rounded-md border-0 py-1.5 text-gray-600 ring-1 ring-inset @error($name) ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500 @enderror sm:text-sm sm:leading-6" placeholder="{{ $placeholder }}" value="{{ $value }}" aria-invalid="true" aria-describedby="{{ $id }}-error">
         @error($name)
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                 <svg class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

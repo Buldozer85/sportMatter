@@ -36,7 +36,7 @@
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $player->id }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $player->first_name }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $player->last_name }}</td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $player->birthdate-->format('d.n.Y') }}</td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $player->birthdate->format('d.n.Y') }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $player->country->name }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $player->team->name }}</td>
 

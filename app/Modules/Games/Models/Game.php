@@ -2,11 +2,15 @@
 
 namespace App\Modules\Games\Models;
 
+use App\enums\FootballActions;
+use App\enums\FootballParameters;
+use App\enums\HockeyParameters;
 use App\Modules\Leagues\Models\League;
 use App\Modules\Referees\Models\Referee;
 use App\Modules\Teams\Models\Team;
 use App\Modules\Users\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -55,10 +59,112 @@ class Game extends Model
 
     public function referees(): BelongsToMany
     {
-        return $this->belongsToMany(Referee::class, 'match_has_referees');
+        return $this->belongsToMany(Referee::class, 'match_has_referees', 'id_match', 'id_referee');
     }
 
-    public function getMeta(string $key) {
-        return json_decode($this->parameters)[$key];
+    public function getMeta(string $key): string | null | array {
+        $decoded = json_decode($this->parameters, true);
+
+        if(is_null($decoded)) {
+            return null;
+        }
+
+        if(!array_key_exists($key, $decoded)) {
+            return null;
+        }
+
+        return $decoded[$key];
+    }
+
+    public function homeActionsCount(): Attribute
+    {
+        return Attribute::make(get: function () {
+            $actions = $this->getMeta(FootballParameters::ACTIONS_HOME->value);
+
+            if (is_null($actions)) {
+                return 0;
+            }
+
+            $count = 0;
+
+            foreach ($actions as $action) {
+                $count += count($action);
+            }
+
+            return $count;
+        });
+    }
+
+    public function awayActionsCount(): Attribute
+    {
+        return Attribute::make(get: function () {
+            $actions = $this->getMeta(FootballParameters::ACTIONS_AWAY->value);
+
+            if (is_null($actions)) {
+                return 0;
+            }
+
+            $count = 0;
+
+            foreach ($actions as $action) {
+                $count += count($action);
+            }
+
+            return $count;
+        });
+    }
+
+
+    public function hockeyHomeActionsCount(): Attribute
+    {
+        return Attribute::make(get: function () {
+            $actions = $this->getMeta(HockeyParameters::HOCKEY_ACTIONS_HOME->value);
+
+            if (is_null($actions)) {
+                return 0;
+            }
+
+            $count = 0;
+
+            foreach ($actions as $action) {
+                $count += count($action);
+            }
+
+            return $count;
+        });
+    }
+
+    public function hockeyAwayActionsCount(): Attribute
+    {
+        return Attribute::make(get: function () {
+            $actions = $this->getMeta(HockeyParameters::HOCKEY_ACTIONS_AWAY->value);
+
+            if (is_null($actions)) {
+                return 0;
+            }
+
+            $count = 0;
+
+            foreach ($actions as $action) {
+                $count += count($action);
+            }
+
+            return $count;
+        });
+    }
+
+    public function score(): Attribute
+    {
+        return Attribute::make(function () {
+            $sport = match ($this->league->sport->name) {
+                'Hokej' => 'hockey_',
+                default => ''
+            };
+
+           $homeTeam = $this->getMeta($sport . 'count_of_goals_home_team');
+           $awayTeam = $this->getMeta($sport . 'count_of_goals_away_team');
+
+           return ($homeTeam ?? '-') . ':' . ($awayTeam ?? '-');
+        });
     }
 }
