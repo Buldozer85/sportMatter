@@ -82,7 +82,7 @@ class Game extends Model
             $actions = $this->getMeta(FootballParameters::ACTIONS_HOME->value);
 
             if (is_null($actions)) {
-                return 0;
+                return 1;
             }
 
             $count = 0;
@@ -101,7 +101,7 @@ class Game extends Model
             $actions = $this->getMeta(FootballParameters::ACTIONS_AWAY->value);
 
             if (is_null($actions)) {
-                return 0;
+                return 1;
             }
 
             $count = 0;

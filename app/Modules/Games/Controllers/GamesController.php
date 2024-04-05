@@ -96,6 +96,7 @@ final class GamesController extends Controller
                 }
 
                 $game->parameters = json_encode($params);
+                break;
             }
             case 'Hokej': {
                 $params = [
@@ -148,6 +149,7 @@ final class GamesController extends Controller
                 }
 
                 $game->parameters = json_encode($params);
+                break;
             }
         }
 
@@ -248,6 +250,7 @@ final class GamesController extends Controller
                 }
 
                 $game->parameters = json_encode($params);
+                break;
             }
             case 'Hokej': {
                 $params = [

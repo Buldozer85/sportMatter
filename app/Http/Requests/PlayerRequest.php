@@ -17,6 +17,20 @@ class PlayerRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+          'first_name.required' => 'Jméno musí být vyplněno',
+          'last_name.required' => 'Příjmení musí být vyplněno',
+          'birthdate.required' => 'Datum narození je povinné',
+          'birthdate.date' => 'Datun narození musí být datum',
+          'country.required' => 'Země musí být vyplněna',
+          'country.integer' => 'Země musí být číslo',
+          'team.required' => 'Tým musí být vyplněn',
+          'team.integer' => 'Tým musí být číslo'
+        ];
+    }
+
     public function authorize(): bool
     {
         return true;

@@ -11,7 +11,7 @@
                     id="league"
                     name="league"
                     :options="$leaguesOptions"
-                    selected="{{$game->league_id}}"
+                    selected="{{$game->league_id ?? old('league')}}"
 
                 />
             </div>
@@ -22,7 +22,7 @@
                     id="season"
                     name="season"
                     :options="$seasonsOptions"
-                    :selected="$game->season_id ?? ''"
+                    :selected="$game->season_id ?? old('season')"
                 />
             </div>
         </div>
@@ -37,7 +37,7 @@
                     id="home_team"
                     name="home_team"
                     :options="$homeTeamOptions"
-                    :selected="$game->home_team_id ?? ''"
+                    :selected="$game->home_team_id ?? old('home_team')"
                 />
             </div>
             <div class="w-6/12">
@@ -47,7 +47,7 @@
                     id="away_team"
                     name="away_team"
                     :options="$awayTeamOptions"
-                    :selected="$game->away_team_id ?? ''"
+                    :selected="$game->away_team_id ?? old('away_team')"
                 />
             </div>
         </div>
@@ -55,10 +55,10 @@
 
     <div class="flex flex-row gap-5">
         <div class="w-6/12">
-            <x-admin.forms.input type="date" name="date_of_match" id="date_of_match" label="Datum zápasu" value="{{ $game->date_of_match?->format('Y-m-d') ?? '' }}"/>
+            <x-admin.forms.input type="date" name="date_of_match" id="date_of_match" label="Datum zápasu" value="{{ $game->date_of_match?->format('Y-m-d') ?? old('date_of_match') }}"/>
         </div>
         <div class="w-6/12">
-            <x-admin.forms.input type="text" name="lap" id="lap" label="Kolo" value="{{ $game->lap ?? '' }}"/>
+            <x-admin.forms.input type="text" name="lap" id="lap" label="Kolo" value="{{ $game->lap ?? old('lap') }}"/>
         </div>
     </div>
     <div class="flex flex-row gap-5">
@@ -259,7 +259,7 @@
                         </div>
                             </div>
                     @else
-                        @if($sportName === 'Fotbal')
+                        @if($sportName === 'Fotbal' && !is_null($game->getMeta(\App\enums\FootballParameters::ACTIONS_HOME->value)))
                             @foreach($game->getMeta(\App\enums\FootballParameters::ACTIONS_HOME->value) as $key => $action)
 
                                 @foreach($action as $minuteAction)
@@ -295,6 +295,33 @@
                                     </div>
                                 @endforeach
                             @endforeach
+                        @else
+                            <div  x-ref="footBallHomePlayerContainer">
+                                <div class="flex flex-row gap-5">
+                                    <div class="w-6/12">
+                                        <x-admin.forms.input
+                                            label="Jméno hráče"
+                                            :id="''"
+                                            :name="'players_home[]'"
+                                        />
+                                    </div>
+                                    <div class="w-6/12">
+                                        <x-admin.forms.input
+                                            label="Minuta"
+                                            :id="''"
+                                            :name="'minutes_home[]'"
+                                        />
+                                    </div>
+                                    <div class="w-6/12">
+                                        <x-admin.forms.select
+                                            label="Akce"
+                                            :id="''"
+                                            :name="'actions_home[]'"
+                                            :options="\App\enums\FootballActions::options()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         @endif
 
                     @endif
@@ -307,7 +334,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
                         </button>
-                        <button type="button" class="w-fit h-fit px-3 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" @click="if(playerCount > 1) playerCount--; $refs.footBallHomePlayerContainer.removeChild($refs.footBallHomePlayerContainer.lastElementChild);">
+                        <button x-show="playerCount >= 2" type="button" class="w-fit h-fit px-3 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" @click="if(playerCount > 1) playerCount--; $refs.footBallHomePlayerContainer.removeChild($refs.footBallHomePlayerContainer.lastElementChild);">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
                             </svg>
@@ -428,7 +455,7 @@
 
                         </div>
                     @else
-                        @if($sportName === 'Fotbal')
+                        @if($sportName === 'Fotbal' && !is_null($game->getMeta(\App\enums\FootballParameters::ACTIONS_AWAY->value)))
                             @foreach($game->getMeta(\App\enums\FootballParameters::ACTIONS_AWAY->value) as $key => $action)
 
                                 @foreach($action as $minuteAction)
@@ -465,6 +492,34 @@
                                     </div>
                                 @endforeach
                             @endforeach
+                        @else
+                            <div  x-ref="awayFootballPlayerContainer">
+                                <div class="flex flex-row gap-5">
+                                    <div class="w-6/12">
+                                        <x-admin.forms.input
+                                            label="Jméno hráče"
+                                            :id="''"
+                                            :name="'players_away[]'"
+                                        />
+                                    </div>
+                                    <div class="w-6/12">
+                                        <x-admin.forms.input
+                                            label="Minuta"
+                                            :id="''"
+                                            :name="'minutes_away[]'"
+                                        />
+                                    </div>
+                                    <div class="w-6/12">
+                                        <x-admin.forms.select
+                                            label="Akce"
+                                            :id="''"
+                                            :name="'actions_away[]'"
+                                            :options="\App\enums\FootballActions::options()"
+                                        />
+                                    </div>
+                                </div>
+
+                            </div>
                         @endif
 
                     @endif
@@ -475,7 +530,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
                         </button>
-                        <button type="button" class="w-fit h-fit px-3 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" @click="if(footballPlayerAwayCount > 1) footballPlayerAwayCount--; $refs.awayFootballPlayerContainer.removeChild($refs.awayFootballPlayerContainer.lastElementChild);">
+                        <button x-show="footballPlayerAwayCount >= 2" type="button" class="w-fit h-fit px-3 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" @click="if(footballPlayerAwayCount > 1) footballPlayerAwayCount--; $refs.awayFootballPlayerContainer.removeChild($refs.awayFootballPlayerContainer.lastElementChild);">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
                             </svg>
@@ -597,7 +652,7 @@
 
                     </div>
                 @else
-                    @if($sportName === 'Hokej')
+                    @if($sportName === 'Hokej' && !is_null($game->getMeta(\App\enums\HockeyParameters::HOCKEY_ACTIONS_HOME->value)))
                     @foreach($game->getMeta(\App\enums\HockeyParameters::HOCKEY_ACTIONS_HOME->value) as $key => $action)
 
                         @foreach($action as $minuteAction)
@@ -633,6 +688,34 @@
                             </div>
                         @endforeach
                     @endforeach
+                    @else
+                        <div x-ref="hockeyPlayersHomeContainer">
+                            <div class="flex flex-row gap-5">
+                                <div class="w-6/12">
+                                    <x-admin.forms.input
+                                        label="Jméno hráče"
+                                        :id="''"
+                                        :name="'hockey_players_home[]'"
+                                    />
+                                </div>
+                                <div class="w-6/12">
+                                    <x-admin.forms.input
+                                        label="Minuta"
+                                        :id="''"
+                                        :name="'hockey_minutes_home[]'"
+                                    />
+                                </div>
+                                <div class="w-6/12">
+                                    <x-admin.forms.select
+                                        label="Akce"
+                                        :id="''"
+                                        :name="'hockey_actions_home[]'"
+                                        :options="\App\enums\HockeyActions::options()"
+                                    />
+                                </div>
+                            </div>
+
+                        </div>
                     @endif
                 @endif
                 <div class="mt-3">
@@ -641,7 +724,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
                     </button>
-                    <button type="button" class="w-fit h-fit px-3 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" @click="if(hockeyPlayerHomeCount > 1) hockeyPlayerHomeCount--; $refs.hockeyPlayersHomeContainer.removeChild($refs.hockeyPlayersHomeContainer.lastElementChild);">
+                    <button x-show="hockeyPlayerHomeCount >= 2" type="button" class="w-fit h-fit px-3 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" @click="if(hockeyPlayerHomeCount > 1) hockeyPlayerHomeCount--; $refs.hockeyPlayersHomeContainer.removeChild($refs.hockeyPlayersHomeContainer.lastElementChild);">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
                         </svg>
@@ -760,12 +843,9 @@
 
                     </div>
                 @else
-               @if($sportName === 'Hokej')
+               @if($sportName === 'Hokej' && !is_null($game->getMeta(\App\enums\HockeyParameters::HOCKEY_ACTIONS_AWAY->value)))
                     @foreach($game->getMeta(\App\enums\HockeyParameters::HOCKEY_ACTIONS_AWAY->value) as $key => $action)
-
                         @foreach($action as $minuteAction)
-
-
                             <div x-ref="hockeyAwayPlayersContainer">
                                 <div class="flex flex-row gap-5">
                                     <div class="w-6/12">
@@ -797,6 +877,34 @@
                             </div>
                         @endforeach
                     @endforeach
+                    @else
+                        <div x-ref="hockeyAwayPlayersContainer">
+                            <div class="flex flex-row gap-5">
+                                <div class="w-6/12">
+                                    <x-admin.forms.input
+                                        label="Jméno hráče"
+                                        :id="''"
+                                        :name="'hockey_players_away[]'"
+                                    />
+                                </div>
+                                <div class="w-6/12">
+                                    <x-admin.forms.input
+                                        label="Minuta"
+                                        :id="''"
+                                        :name="'hockey_minutes_away[]'"
+                                    />
+                                </div>
+                                <div class="w-6/12">
+                                    <x-admin.forms.select
+                                        label="Akce"
+                                        :id="''"
+                                        :name="'hockey_actions_away[]'"
+                                        :options="\App\enums\HockeyActions::options()"
+                                    />
+                                </div>
+                            </div>
+
+                        </div>
                     @endif
                 @endif
                 <div class="mt-3">
@@ -805,7 +913,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
                     </button>
-                    <button type="button" class="w-fit h-fit px-3 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" @click="if(hockeyPlayerAwayCount > 1) hockeyPlayerAwayCount--;$refs.hockeyAwayPlayersContainer.removeChild($refs.hockeyAwayPlayersContainer.lastElementChild);">
+                    <button x-show="hockeyPlayerAwayCount >= 2" type="button" class="w-fit h-fit px-3 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" @click="if(hockeyPlayerAwayCount > 1) hockeyPlayerAwayCount--;$refs.hockeyAwayPlayersContainer.removeChild($refs.hockeyAwayPlayersContainer.lastElementChild);">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
                         </svg>

@@ -16,6 +16,19 @@ class CreateSeasonRequest extends FormRequest
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'yearStart.required' => 'Začátek sezóny musí být vyplněn',
+            'yearStart.date' => 'Začátek sezóny musí být datum',
+            'yearEnd.required' => 'Konec sezóny musí být vyplněn',
+            'yearEnd.date' => 'Konec sezóny musí být datum',
+            'league.required' => 'Liga je povinná',
+            'league.integer' => 'Liga musí být číslo',
+            'is_active.boolean' => 'Liga je aktivní musí být 1/0',
+        ];
+    }
+
     public function authorize(): bool
     {
         return true;
