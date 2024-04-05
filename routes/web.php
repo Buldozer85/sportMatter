@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\App\DartController;
+use App\Http\Controllers\App\FootballController;
 use App\Http\Controllers\App\HockeyController;
+use App\Http\Controllers\App\MatchController;
+use App\Http\Controllers\App\UserController;
 use App\Modules\Users\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +22,22 @@ use Illuminate\Support\Facades\Route;
 Route::controller(HockeyController::class)->prefix('/hokej')->group(function () {
         Route::get('/', 'index')->name('hockey.index');
     });
+
+Route::controller(FootballController::class)->prefix('/fotbal')->group(function () {
+    Route::get('/', 'index')->name('football.index');
+});
+
+Route::controller(DartController::class)->prefix('/sipky')->group(function () {
+    Route::get('/', 'index')->name('dart.index');
+});
+
+Route::controller(MatchController::class)->prefix('/')->group(function () {
+    Route::get('/zapas/{id}', 'index')->name('matches.index');
+});
+
+Route::controller(UserController::class)->prefix('/')->group(function () {
+    Route::get('/profil', 'index')->name('user.profile');
+});
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/registrace', 'showRegister')->name('app.show-register');
