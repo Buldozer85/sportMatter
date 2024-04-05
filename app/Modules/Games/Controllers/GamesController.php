@@ -189,10 +189,10 @@ final class GamesController extends Controller
                 $params = [
                     'count_of_sets_first_player' => $request->get('count_of_sets_first_player'),
                     'count_of_legs_first_player' => $request->get('count_of_legs_first_player'),
-                    'average_player_one' => $request->get('average_player_one'),
+                    'average_first_player' => $request->get('average_first_player'),
                     'count_of_sets_second_player' => $request->get('count_of_sets_second_player'),
                     'count_of_legs_second_player' => $request->get('count_of_legs_second_player'),
-                    'average_player_two' => $request->get('average_player_two')
+                    'average_second_player' => $request->get('average_second_player')
                 ];
                 $game->parameters = json_encode($params);
                 break;
