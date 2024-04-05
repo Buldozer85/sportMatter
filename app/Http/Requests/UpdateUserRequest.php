@@ -14,8 +14,8 @@ class UpdateUserRequest extends FormRequest
             'first_name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user->id)],
-            'password' => ['required', 'string', 'confirmed'],
-            'password_confirmation' => ['required_with:password', 'string'],
+            'password' => ['nullable', 'string', 'confirmed'],
+            'password_confirmation' => ['required_with:password', 'string', 'nullable '],
             'access' => Rule::in([Role::USER->value, Role::EDITOR->value, Role::ADMINISTRATOR->value, Role::SUPER_ADMINISTRATOR->value])
         ];
     }
@@ -30,7 +30,6 @@ class UpdateUserRequest extends FormRequest
             'email.required' => 'E-mail je povinný',
             'email.string' => 'E-mail musí být textový řetězec',
             'email.unique' => 'Účet s tímto e-mailem již existuje',
-            'password.required' => 'Heslo je povinné',
             'password.string' => 'Heslo musí být textový řetězec',
             'password.confirmed' => 'Zadaná hesla se neshodují',
             'password_confirmation.required_with' => 'Heslo znovu musí být vyplněno',

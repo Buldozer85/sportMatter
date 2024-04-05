@@ -8,11 +8,17 @@ use App\Helpers\Enums\SportTypeEnum;
 use App\Services\Enums\CastTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $name
+ */
 final class Sport extends Model
 {
     public const ATTR_ID = 'id';
 
     public const ATTR_NAME = 'name';
+
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

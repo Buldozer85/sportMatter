@@ -11,4 +11,14 @@ class SeasonModelTable extends AbstractModelTable
 
     protected string $view = 'livewire.admin.season-model-table';
 
+    public function delete(string $id)
+    {
+        /** @var Season $record */
+        $record = $this->model::query()->find($id);
+
+        $record->teams()->detach();
+
+        $record->delete();
+    }
+
 }
