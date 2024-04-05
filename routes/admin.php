@@ -40,6 +40,7 @@ Route::middleware('admin')->group(function () {
         Route::get('/sporty', 'sports')->name('dashboard.sports');
         Route::get('/stadiony', 'stadiums')->name('dashboard.stadiums');
         Route::get('/tymy', 'teams')->name('dashboard.teams');
+        Route::get('/profil', 'profile')->name('dashboard.profile');
     });
 
     Route::view("/uzivatel", "admin.users.new");

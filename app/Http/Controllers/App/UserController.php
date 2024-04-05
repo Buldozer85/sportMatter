@@ -13,10 +13,6 @@ class UserController extends Controller
             return redirect()->route('hockey.index');
         }
 
-        if(user()->isAdmin()){
-            return view('admin.user.profile');
-        } else {
-            return view('app.pages.user.profile');
-        }
+        return view('app.pages.user.profile');
     }
 }

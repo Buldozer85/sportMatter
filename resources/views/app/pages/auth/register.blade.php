@@ -3,7 +3,7 @@
         <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div class="mx-auto w-full max-w-sm lg:w-96">
                 <div>
-                    <img class="h-10 w-auto" src="{{ asset('img/logo-no-background.svg') }}" alt="Your Company">
+                    <img class="h-10 w-auto" src="{{ asset('img/logo-no-background.svg') }}" alt="SportMatter">
                     <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Vytvoř si účet</h2>
                 </div>
 

@@ -8,16 +8,16 @@
                     </svg>
                 </div>
                 <h1 class="text-xl font-bold mt-2 text-center text-white">Profil uživatele</h1>
-                <h2 class="text-center mt-1">{{user()->getFirstName()}} {{user()->getLastName()}}</h2>
+                <h2 class="text-center mt-1">{{user()->full_name}}</h2>
                 @csrf
                 <div class="px-4 py-6 sm:p-8">
                     <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div class="sm:col-span-3">
-                            <x-admin.forms.input label="Jméno" name="first_name" id="first_name" placeholder="Pepa" required value="{{user()->getFirstName()}}"/>
+                            <x-admin.forms.input label="Jméno" name="first_name" id="first_name" placeholder="Pepa" required value="{{user()->first_name}}"/>
                         </div>
 
                         <div class="sm:col-span-3">
-                            <x-admin.forms.input label="Příjmení" name="last_name" id="last_name" placeholder="Jandač" required value="{{user()->getLastName()}}"/>
+                            <x-admin.forms.input label="Příjmení" name="last_name" id="last_name" placeholder="Jandač" required value="{{user()->last_name}}"/>
                         </div>
 
                         <div class="sm:col-span-6">

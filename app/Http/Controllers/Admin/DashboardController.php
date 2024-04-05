@@ -60,4 +60,9 @@ class DashboardController extends Controller
     {
         return view('admin.teams.index');
     }
+
+    public function profile()
+    {
+        return view('admin.user.profile');
+    }
 }

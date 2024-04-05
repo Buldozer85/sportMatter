@@ -21,7 +21,7 @@
             <div class="flex h-16 justify-between">
                 <div class="flex">
                     <div class="flex flex-shrink-0 items-center">
-                        <img class="h-6 w-auto" src="{{ asset('img/logo-no-background_white.png') }}" alt="Your Company">
+                        <img class="h-6 w-auto" src="{{ asset('img/logo-no-background_white.png') }}" alt="SportMatter">
                     </div>
                 </div>
 
