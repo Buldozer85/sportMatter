@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\enums\Role;
+use App\Modules\Games\Models\Game;
 use App\Modules\Leagues\Models\League;
 use App\Modules\Referees\Models\Referee;
 use App\Modules\Seasons\Models\Season;
@@ -34,9 +35,12 @@ class GamesForm extends Component
 
     private Collection $leagues;
 
+    public ?Game $game;
 
-    public function mount(Collection $selectedTeams = null, int $selectedLeague = null)
+    public function mount(Game $game = null)
     {
+        $this->game = $game;
+
         $leagues = League::query()
             ->with('sport')
             ->get();
@@ -47,35 +51,46 @@ class GamesForm extends Component
             $this->leaguesOptions[$league->id] = $league->name . " - " . $league->sport->name;
         }
 
-        if (is_null($selectedLeague)) {
+        $leagueSport = $game->league?->sport;
+
+        if (empty($game->attributesToArray())) {
             $this->selectedLeague = $leagues->first()->id;
+
+            $leagueSport = $leagues->where('id', '=', $this->selectedLeague)->first()->sport;
+
+            $teams = Team::query()
+                ->where('league_id', '=', $this->selectedLeague)
+                ->get();
+
+            $this->sportName = $leagueSport->name;
+
+            $awayTeams = $teams->whereNotIn('id', $teams->first()?->id);
+
         } else {
-            $this->selectedLeague = $selectedLeague;
+            $this->selectedLeague = $game->league->id;
+            $this->sportName = $game->league->sport->name;
+            $teams = Team::query()
+                ->where('league_id', '=', $this->selectedLeague)
+                ->get();
+            $awayTeams = $teams->where('id', '!=', $game->home_team_id);
+
         }
 
-        $leagueSport = $leagues->where('id', '=', $this->selectedLeague)->first()->sport;
 
-        $this->sportName = $leagueSport->name;
-
-        $teams = Team::query()
-            ->where('league_id', '=', $this->selectedLeague)
-            ->get();
-
-        $awayTeams = $teams->whereNotIn('id', $teams->first()?->id);
 
         foreach ($teams->where('id', '!=', $awayTeams->first()?->id) as $team) {
             $this->homeTeamOptions[$team->id] = $team->name . " - " . $team->league->name;
         }
 
-        $this->selectedHome = array_key_first($this->homeTeamOptions);
+        $this->selectedHome = $game->home_team_id ?? array_key_first($this->homeTeamOptions);
+
 
         foreach ($awayTeams as $team) {
             $this->awayTeamOptions[$team->id] = $team->name . " - " . $team->league->name;
         }
 
-        $this->selectedAway = array_key_first($this->awayTeamOptions);
+        $this->selectedAway = $game->away_team_id ?? array_key_first($this->awayTeamOptions);
 
-        $this->leagueTeams = $selectedTeams;
 
         $referees = Referee::query()
             ->where('sport_id', '=', $leagueSport->id)
@@ -101,6 +116,7 @@ class GamesForm extends Component
             $this->reset('homeTeamOptions');
             $this->reset('awayTeamOptions');
             $this->reset('sportName');
+            $this->reset('refereesOptions');
 
             $teams = Team::query()
                 ->where('league_id', '=', $this->selectedLeague)
