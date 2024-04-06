@@ -9,7 +9,7 @@ use App\Modules\Users\Models\User;
 use http\Env\Request;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class UserAdminController extends Controller
 {
     public function create(CreateUserRequest $request)
     {
@@ -28,12 +28,12 @@ class UserController extends Controller
 
     public function showCreate()
     {
-        return view('users.new');
+        return view('admin.users.new');
     }
 
     public function showUpdate(User $user)
     {
-        return view('app.pages.user.profile');
+        return view('admin.users.update')->with(['user' => $user]);
     }
 
     public function update(User $user, UpdateUserRequest $request)
@@ -46,17 +46,17 @@ class UserController extends Controller
             $user->password = Hash::make($request->get('password'));
         }
 
-        $user->access = $user->getAccess();
+        $user->access = $request->get('access');
 
         $user->save();
 
-        return view('app.pages.user.profile');
+        return redirect()->route('admin.users.show-update', $user->id);
     }
 
-    public function delete(User $user)
+    public function delete(User $user, Request $request)
     {
         $user->delete();
 
-        return redirect()->route('user.index');
+        return redirect()->route('admin.users.index');
     }
 }

@@ -11,12 +11,12 @@
 <body>
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img class="mx-auto h-10 w-auto" src="{{ asset('img/logo-no-background.svg') }}" alt="SportMatter">
+        <a href="{{route('hockey.index')}}"><img class="mx-auto h-10 w-auto" src="{{ asset('img/logo-no-background.svg') }}" alt="SportMatter"></a>
         <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Přihlásit se do svého účtu</h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="{{ route('login') }}" method="POST">
+        <form class="space-y-6" action="{{ route('app.login') }}" method="POST">
             @csrf
 
             <div>
@@ -35,6 +35,9 @@
 
             <div>
                 <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Přihlásit se</button>
+                <div class="flex items-center justify-between mt-5">
+                        <a href="{{ route('app.show-register') }}" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Registrovat se</a>
+                </div>
             </div>
         </form>
     </div>

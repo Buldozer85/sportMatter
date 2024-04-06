@@ -120,4 +120,9 @@ class User extends Authenticatable
     {
         return Attribute::make(get: fn() => !in_array($this->access, [ROLE::USER, ROLE::EDITOR]));
     }
+
+    public function getAccess()
+    {
+        return $this->getAttributeValue(self::ATTR_ACCESS);
+    }
 }

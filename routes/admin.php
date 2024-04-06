@@ -5,7 +5,6 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Modules\Countries\Controllers\CountriesController;
 use App\Modules\Games\Controllers\GamesController;
 use App\Modules\Leagues\Controllers\LeaguesController;
-use App\Modules\Leagues\Models\League;
 use App\Modules\Players\Controllers\PlayersController;
 use App\Modules\Referees\Controllers\RefereesController;
 use App\Modules\Seasons\Controllers\SeasonsController;
@@ -13,7 +12,7 @@ use App\Modules\Sports\Controllers\SportController;
 use App\Modules\Stadiums\Controllers\StadiumsController;
 use App\Modules\Teams\Controllers\TeamsController;
 use App\Modules\Users\Controllers\AuthAdminController;
-use App\Modules\Users\Controllers\UserController;
+use App\Modules\Users\Controllers\UserAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,7 +63,7 @@ Route::middleware('admin')->group(function () {
     Route::view("/vytvoritZapas", "admin.games.new");
     Route::view("/upravitZapas/{id}", "admin.games.update");
 
-    Route::controller(UserController::class)->prefix('/uzivatel')->group(function () {
+    Route::controller(UserAdminController::class)->prefix('/uzivatel')->group(function () {
         Route::get('/vytvorit', 'showCreate')->name('admin.users.show-new');
         Route::get('/{user}', 'showUpdate')->name('admin.users.show-update');
         Route::post('/create', 'create')->name('admin.users.create');
