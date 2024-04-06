@@ -48,6 +48,14 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 
+Route::controller(\App\Modules\Users\Controllers\UserController::class)->prefix('/user')->group(function () {
+    Route::get('/vytvorit', 'showCreate')->name('users.show-new');
+    Route::get('/{user}', 'showUpdate')->name('users.show-update');
+    Route::post('/create', 'create')->name('users.create');
+    Route::post('/update/{user}', 'update')->name('users.update');
+});
+
+
 Route::get('/', function () {
     return redirect()->route('hockey.index');
 });
