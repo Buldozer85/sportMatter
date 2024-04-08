@@ -5,10 +5,12 @@
     'home_team_name' => '',
     'away_team_name' => '',
     'time' => '',
-    'star' => ''
+    'star' => '',
+    'referees' => [],
+    'stadium' => ''
 ])
 
-<div class="detailMatchContainer text-center">
+<div class="detailMatchContainer text-center space-y-4">
         <p class="text-center font-bold">{{$time}}</p>
         <div class="score flex flex-row justify-center items-center mt-5">
             <p class="font-bold text-3xl flex-1">{{$home_team_name}}</p>
@@ -22,6 +24,25 @@
         <div class="line">
 
         </div>
+    <div class="text-left">
+        <div>
+            <p class="border-b-2 solid border-white max-w-[100px] py-2">Rozhodčí</p>
+            <ul class="ml-4 mt-4">
+                @foreach($referees as $referee)
+                    <li>{{ $referee->full_name }}</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+
+    <div class="text-left border-b-2 solid border-white py-4">
+        <div>
+            <p class="border-b-2 solid border-white max-w-[100px] py-2">Stadión</p>
+            <p class="ml-4 mt-4">
+                {{ $stadium }}
+            </p>
+        </div>
+    </div>
     <div x-data="{ tab: 'overview' }">
         <div class="control-panel flex gap-2 mt-4">
             <button class="font-bold" @click="tab = 'overview'" :class="{ 'bg-white text-black': tab === 'overview' }" type="button">Přehled</button>

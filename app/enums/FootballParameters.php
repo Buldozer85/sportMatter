@@ -44,4 +44,22 @@ enum FootballParameters: string
 
     case ACTIONS_AWAY = 'actions_away';
 
+    public function label(): string
+    {
+        return match($this) {
+            self::COUNT_OF_GOALS_AWAY_TEAM, self::COUNT_OF_GOALS_HOME_TEAM => 'Počet gólů',
+            self::HOLDING_THE_BALL_AWAY_TEAM, self::HOLDING_THE_BALL_HOME_TEAM => 'Držení míče',
+            self::NUMBER_OF_SHOTS_ON_GOAL_AWAY_TEAM, self::NUMBER_OF_SHOTS_ON_GOAL_HOME_TEAM => 'Počet střel na bránu',
+            self::NUMBER_OF_SHOTS_AWAY_TEAM, self::NUMBER_OF_SHOTS_HOME_TEAM => 'Počet střel',
+            self::NUMBER_OF_CORNER_HOME_TEAM, self::NUMBER_OF_CORNER_AWAY_TEAM => 'Počet rohů',
+            self::NUMBER_OF_OFFSIDES_HOME_TEAM, self::NUMBER_OF_OFFSIDES_AWAY_TEAM => 'Počet ofsajdů',
+            self::NUMBER_OF_FOULS_HOME_TEAM, self::NUMBER_OF_FOULS_AWAY_TEAM => 'Počet faulů',
+            self::NUMBER_OF_YELLOW_CARDS_HOME_TEAM, self::NUMBER_OF_YELLOW_CARDS_AWAY_TEAM => 'Počet žlutých karet',
+            self::NUMBER_OF_RED_CARDS_AWAY_TEAM, self::NUMBER_OF_RED_CARDS_HOME_TEAM => 'Počet červených karet',
+            self::ACTIONS_HOME => 'Akce domácí',
+            self::ACTIONS_AWAY => 'Akce hostující',
+        };
+
+    }
+
 }

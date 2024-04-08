@@ -7,11 +7,13 @@ namespace App\Modules\Leagues\Models;
 
 use App\Helpers\Enums\SportTypeEnum;
 use App\Modules\Countries\Models\Country;
+use App\Modules\Games\Models\Game;
 use App\Modules\Sports\Models\Sport;
 use App\Services\Enums\CastTypeEnum;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -66,5 +68,10 @@ class League extends Model
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function matches(): HasMany
+    {
+        return $this->hasMany(Game::class, 'league_id');
     }
 }
