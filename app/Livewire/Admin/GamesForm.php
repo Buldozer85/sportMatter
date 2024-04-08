@@ -53,7 +53,9 @@ class GamesForm extends Component
 
         $leagueSport = $game->league?->sport;
 
-        if (empty($game->attributesToArray())) {
+
+
+        if (is_null($this->game->id)) {
 
             $this->selectedLeague = old('league') ?? $leagues->first()->id;
 
