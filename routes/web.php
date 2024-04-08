@@ -3,6 +3,7 @@
 use App\Http\Controllers\App\DartController;
 use App\Http\Controllers\App\FootballController;
 use App\Http\Controllers\App\HockeyController;
+use App\Http\Controllers\App\LeagueController;
 use App\Http\Controllers\App\MatchController;
 use App\Http\Controllers\App\UserController;
 use App\Modules\Users\Controllers\AuthController;
@@ -32,7 +33,7 @@ Route::controller(DartController::class)->prefix('/sipky')->group(function () {
 });
 
 Route::controller(MatchController::class)->prefix('/')->group(function () {
-    Route::get('/zapas/{id}', 'index')->name('matches.index');
+    Route::get('/zapas/{game}', 'detail')->name('match.detail');
 });
 
 Route::controller(UserController::class)->prefix('/')->group(function () {
@@ -45,6 +46,10 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/prihlaseni', 'showLogin')->name('app.show-login');
     Route::post('/login', 'login')->name('app.login');
     Route::get('/odhlasit', 'logout')->name('app.logout');
+});
+
+Route::controller(LeagueController::class)->prefix('/liga')->group(function () {
+    Route::get('/{league}', 'index')->name('league.index');
 });
 
 

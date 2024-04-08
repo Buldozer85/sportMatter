@@ -55,7 +55,7 @@
 
     <div class="flex flex-row gap-5">
         <div class="w-6/12">
-            <x-admin.forms.input type="date" name="date_of_match" id="date_of_match" label="Datum zápasu" value="{{ $game->date_of_match?->format('Y-m-d') ?? old('date_of_match') }}"/>
+            <x-admin.forms.input type="datetime" name="date_of_match" id="date_of_match" label="Datum zápasu" value="{{ $game->date_of_match?->format('Y-m-d') ?? old('date_of_match') }}"/>
         </div>
         <div class="w-6/12">
             <x-admin.forms.input type="text" name="lap" id="lap" label="Kolo" value="{{ $game->lap ?? old('lap') }}"/>

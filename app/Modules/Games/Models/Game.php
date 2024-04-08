@@ -7,6 +7,7 @@ use App\enums\FootballParameters;
 use App\enums\HockeyParameters;
 use App\Modules\Leagues\Models\League;
 use App\Modules\Referees\Models\Referee;
+use App\Modules\Seasons\Models\Season;
 use App\Modules\Teams\Models\Team;
 use App\Modules\Users\Models\User;
 use Carbon\Carbon;
@@ -27,6 +28,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $league_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property string $home_score
+ * @property string $away_score
+ * @property string $score
+ * @property string $day
+ * @property string $season_league_label
  */
 class Game extends Model
 {
@@ -60,6 +66,11 @@ class Game extends Model
     public function referees(): BelongsToMany
     {
         return $this->belongsToMany(Referee::class, 'match_has_referees', 'id_match', 'id_referee');
+    }
+
+    public function season(): BelongsTo
+    {
+        return $this->belongsTo(Season::class);
     }
 
     public function getMeta(string $key): string | null | array {
@@ -165,6 +176,54 @@ class Game extends Model
            $awayTeam = $this->getMeta($sport . 'count_of_goals_away_team');
 
            return ($homeTeam ?? '-') . ':' . ($awayTeam ?? '-');
+        });
+    }
+
+    public function homeScore(): Attribute
+    {
+        $sport = match ($this->league->sport->name) {
+            'Hokej' => 'hockey_',
+            default => ''
+        };
+
+        return Attribute::make(get: fn() =>  $this->getMeta($sport . 'count_of_goals_home_team') ?? '-');
+    }
+
+    public function awayScore(): Attribute
+    {
+        $sport = match ($this->league->sport->name) {
+            'Hokej' => 'hockey_',
+            default => ''
+        };
+
+        return Attribute::make(get: fn() =>  $this->getMeta($sport . 'count_of_goals_away_team') ?? '-');
+    }
+
+    public function day(): Attribute
+    {
+        $days = ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'];
+
+        return Attribute::make(get: fn() => $days[$this->date_of_match->dayOfWeek]);
+    }
+
+    public function seasonLeagueLabel(): Attribute
+    {
+        return Attribute::make(get: fn() => $this->league->name . ' ' . $this->season->season_years . ' - ' .  $this->lap . ". kolo");
+    }
+
+    public function actions(): Attribute
+    {
+
+
+        return Attribute::make(function () {
+            $sport = match ($this->league->sport->name) {
+                'Hokej' => 'hockey_',
+                default => ''
+            };
+
+           array_merge($this->getMeta($sport . 'actions_home'), $this->getMeta($sport . 'actions_away'));
+
+           return array_merge($this->getMeta($sport . 'actions_home'), $this->getMeta($sport . 'actions_away'));
         });
     }
 }

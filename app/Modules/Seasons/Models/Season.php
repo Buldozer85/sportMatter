@@ -8,7 +8,9 @@ use App\Helpers\Enums\SportTypeEnum;
 use App\Modules\Leagues\Models\League;
 use App\Modules\Teams\Models\Team;
 use App\Services\Enums\CastTypeEnum;
+
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -20,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property boolean $is_active
+ * @property string $season_years
  */
 final class Season extends Model
 {
@@ -37,4 +40,12 @@ final class Season extends Model
         'yearEnd' => 'date',
         'yearStart' => 'date'
     ];
+
+    public function seasonYears(): Attribute
+    {
+        if($this->yearEnd->format('Y') === $this->yearStart->format('Y')) {
+            return Attribute::make(get: fn() => $this->yearStart->format('Y'));
+        }
+        return Attribute::make(get: fn() => $this->yearStart->format('Y'). '/' . $this->yearEnd);
+    }
 }

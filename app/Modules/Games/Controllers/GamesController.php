@@ -78,9 +78,11 @@ final class GamesController extends Controller
                 foreach ($homePlayersWithAction as $index => $homePlayer) {
                     $params['actions_home'][$homeMinutesActions[$index]][] = [
                         'player' => $homePlayer,
-                        'action' => FootballActions::from(intval($homeActions[$index]))->value
+                        'action' => FootballActions::from(intval($homeActions[$index]))->value,
+                        'type' => 'home'
                     ];
                 }
+                ksort($params['actions_home']);
 
                 $awayPlayersWithAction = $request->get('players_away');
                 $awayMinutesActions = $request->get('minutes_away');
@@ -91,9 +93,16 @@ final class GamesController extends Controller
                 foreach ($awayPlayersWithAction as $index => $awayPlayer) {
                     $params['actions_away'][$awayMinutesActions[$index]][] = [
                         'player' => $awayPlayer,
-                        'action' => FootballActions::from(intval($awayActions[$index]))->value
+                        'action' => FootballActions::from(intval($awayActions[$index]))->value,
+                        'type' => 'away'
                     ];
                 }
+
+                ksort($params['actions_away']);
+
+                $params['actions'] = array_replace($params['actions_home'], $params['actions_away']);
+
+                ksort($params['actions']);
 
                 $game->parameters = json_encode($params);
                 break;
@@ -131,9 +140,12 @@ final class GamesController extends Controller
                 foreach ($homePlayersWithAction as $index => $homePlayer) {
                     $params['hockey_actions_home'][$homeMinutesActions[$index]][] = [
                         'player' => $homePlayer,
-                        'action' => HockeyActions::from(intval($homeActions[$index]))->value
+                        'action' => HockeyActions::from(intval($homeActions[$index]))->value,
+                        'type' => 'home'
                     ];
                 }
+
+                ksort($params['hockey_actions_home']);
 
                 $awayPlayersWithAction = $request->get('hockey_players_away');
                 $awayMinutesActions = $request->get('hockey_minutes_away');
@@ -144,9 +156,16 @@ final class GamesController extends Controller
                 foreach ($awayPlayersWithAction as $index => $awayPlayer) {
                     $params['hockey_actions_away'][$awayMinutesActions[$index]][] = [
                         'player' => $awayPlayer,
-                        'action' => HockeyActions::from(intval($awayActions[$index]))->value
+                        'action' => HockeyActions::from(intval($awayActions[$index]))->value,
+                        'type' => 'away'
                     ];
                 }
+
+                ksort($params['hockey_actions_away']);
+
+                $params['actions'] = array_replace($params['hockey_actions_home'], $params['hockey_actions_away']);
+
+                ksort($params['actions']);
 
                 $game->parameters = json_encode($params);
                 break;
@@ -232,7 +251,8 @@ final class GamesController extends Controller
                 foreach ($homePlayersWithAction as $index => $homePlayer) {
                     $params['actions_home'][$homeMinutesActions[$index]][] = [
                         'player' => $homePlayer,
-                        'action' => FootballActions::from(intval($homeActions[$index]))->value
+                        'action' => FootballActions::from(intval($homeActions[$index]))->value,
+                        'type' => 'home'
                     ];
                 }
 
@@ -240,14 +260,23 @@ final class GamesController extends Controller
                 $awayMinutesActions = $request->get('minutes_away');
                 $awayActions = $request->get('actions_away');
 
+                ksort($params['actions_home']);
+
                 $params['actions_away'] = [];
 
                 foreach ($awayPlayersWithAction as $index => $awayPlayer) {
                     $params['actions_away'][$awayMinutesActions[$index]][] = [
                         'player' => $awayPlayer,
-                        'action' => FootballActions::from(intval($awayActions[$index]))->value
+                        'action' => FootballActions::from(intval($awayActions[$index]))->value,
+                        'type' => 'away'
                     ];
                 }
+
+                ksort($params['actions_away']);
+                $params['actions'] = merge_arrays_preserve_keys($params['actions_home'], $params['actions_away']);
+
+
+                ksort($params['actions']);
 
                 $game->parameters = json_encode($params);
                 break;
@@ -285,9 +314,12 @@ final class GamesController extends Controller
                 foreach ($homePlayersWithAction as $index => $homePlayer) {
                     $params['hockey_actions_home'][$homeMinutesActions[$index]][] = [
                         'player' => $homePlayer,
-                        'action' => HockeyActions::from(intval($homeActions[$index]))->value
+                        'action' => HockeyActions::from(intval($homeActions[$index]))->value,
+                        'type' => 'home'
                     ];
                 }
+
+                ksort($params['hockey_actions_home']);
 
                 $awayPlayersWithAction = $request->get('hockey_players_away');
                 $awayMinutesActions = $request->get('hockey_minutes_away');
@@ -298,16 +330,26 @@ final class GamesController extends Controller
                 foreach ($awayPlayersWithAction as $index => $awayPlayer) {
                     $params['hockey_actions_away'][$awayMinutesActions[$index]][] = [
                         'player' => $awayPlayer,
-                        'action' => HockeyActions::from(intval($awayActions[$index]))->value
+                        'action' => HockeyActions::from(intval($awayActions[$index]))->value,
+                        'type' => 'away'
                     ];
                 }
+
+                ksort($params['hockey_actions_away']);
+
+                $params['actions'] = array_replace($params['hockey_actions_home'], $params['hockey_actions_away']);
+
+                ksort($params['actions']);
 
                 $game->parameters = json_encode($params);
             }
         }
 
 
+
         $game->save();
+        $game->referees()->detach();
+
         foreach ($request->get('referees') as $referee) {
             $game->referees()->attach($referee);
         }
