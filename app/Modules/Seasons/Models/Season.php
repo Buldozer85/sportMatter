@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Seasons\Models;
 
 use App\Helpers\Enums\SportTypeEnum;
+use App\Modules\Games\Models\Game;
 use App\Modules\Leagues\Models\League;
 use App\Modules\Teams\Models\Team;
 use App\Services\Enums\CastTypeEnum;
@@ -13,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -36,6 +38,11 @@ final class Season extends Model
         return $this->belongsToMany(Team::class, 'season_has_teams');
     }
 
+    public function matches(): HasMany
+    {
+        return $this->hasMany(Game::class, 'season_id');
+    }
+
     protected $casts = [
         'yearEnd' => 'date',
         'yearStart' => 'date'
@@ -46,6 +53,6 @@ final class Season extends Model
         if($this->yearEnd->format('Y') === $this->yearStart->format('Y')) {
             return Attribute::make(get: fn() => $this->yearStart->format('Y'));
         }
-        return Attribute::make(get: fn() => $this->yearStart->format('Y'). '/' . $this->yearEnd);
+        return Attribute::make(get: fn() => $this->yearStart->format('Y'). '/' . $this->yearEnd->format('Y'));
     }
 }

@@ -179,8 +179,12 @@ class Game extends Model
         });
     }
 
-    public function homeScore(): Attribute
+    public function homeScore(): ?Attribute
     {
+        if(is_null($this->league)) {
+            return null;
+        }
+
         $sport = match ($this->league->sport->name) {
             'Hokej' => 'hockey_',
             default => ''

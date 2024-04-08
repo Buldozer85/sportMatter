@@ -8,6 +8,7 @@ namespace App\Modules\Leagues\Models;
 use App\Helpers\Enums\SportTypeEnum;
 use App\Modules\Countries\Models\Country;
 use App\Modules\Games\Models\Game;
+use App\Modules\Seasons\Models\Season;
 use App\Modules\Sports\Models\Sport;
 use App\Services\Enums\CastTypeEnum;
 use Carbon\Carbon;
@@ -73,5 +74,10 @@ class League extends Model
     public function matches(): HasMany
     {
         return $this->hasMany(Game::class, 'league_id');
+    }
+
+    public function seasons(): HasMany
+    {
+        return $this->hasMany(Season::class, 'league_id');
     }
 }
