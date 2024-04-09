@@ -37,4 +37,9 @@ final class Team extends Model
     {
         return $this->belongsTo(League::class);
     }
+
+    public function getMatchesCountInSeason(int $season_id)
+    {
+        return $this->seasons->where('id', '=', $season_id)->count();
+    }
 }

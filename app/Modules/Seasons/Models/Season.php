@@ -35,7 +35,7 @@ final class Season extends Model
 
     public function teams(): BelongsToMany
     {
-        return $this->belongsToMany(Team::class, 'season_has_teams');
+        return $this->belongsToMany(Team::class, 'season_has_teams')->orderByPivot('points', 'desc')->withPivot(['points']);
     }
 
     public function matches(): HasMany
