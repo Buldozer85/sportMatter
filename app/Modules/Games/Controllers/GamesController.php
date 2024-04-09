@@ -6,6 +6,7 @@ namespace App\Modules\Games\Controllers;
 
 use App\enums\FootballActions;
 use App\enums\HockeyActions;
+use App\enums\MatchResults;
 use App\enums\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateGameRequest;
@@ -13,6 +14,7 @@ use App\Http\Requests\UpdateGameRequest;
 use App\Modules\Games\Models\Game;
 use App\Modules\Leagues\Models\League;
 use App\Modules\Referees\Models\Referee;
+use App\Modules\Seasons\Models\Season;
 use App\Modules\Users\Models\User;
 use http\Env\Response;
 
@@ -40,8 +42,25 @@ final class GamesController extends Controller
                     'average_player_one' => $request->get('average_player_one'),
                     'count_of_sets_second_player' => $request->get('count_of_sets_second_player'),
                     'count_of_legs_second_player' => $request->get('count_of_legs_second_player'),
-                    'average_player_two' => $request->get('average_player_two')
+                    'average_player_two' => $request->get('average_player_two'),
+                    'darts_result_first_player' => $request->get('darts_result_first_player'),
+                    'darts_result_second_player' => $request->get('darts_result_second_player')
                 ];
+
+                $season = Season::query()->find($game->season_id);
+
+                $homePoints = MatchResults::from(intval($request->get('darts_result_first_player')));
+
+                $prePoints =  $season->teams->where('id', '=', $game->home_team_id)->first()->pivot->score;
+
+                $season->teams()->updateExistingPivot($game->home_team_id, ['points' => $prePoints + $homePoints->points()]);
+
+                $awayPoints = MatchResults::from(intval($request->get('darts_result_second_player')));
+
+                $prePoints =  $season->teams->where('id', '=', $game->away_team_id)->first()->pivot->score;
+
+                $season->teams()->updateExistingPivot($game->away_team_id, ['points' => $prePoints + $awayPoints->points()]);
+
                 $game->parameters = json_encode($params);
                 break;
             }
@@ -64,8 +83,24 @@ final class GamesController extends Controller
                     'number_of_offsides_away_team' => $request->get('number_of_offsides_away_team'),
                     'number_of_fouls_away_team' => $request->get('number_of_fouls_away_team'),
                     'number_of_red_cards_away_team' => $request->get('number_of_red_cards_away_team'),
-                    'number_of_yellow_cards_away_team' => $request->get('number_of_yellow_cards_away_team')
+                    'number_of_yellow_cards_away_team' => $request->get('number_of_yellow_cards_away_team'),
+                    'football_result_away_team' => $request->get('football_result_away_team'),
+                    'football_result_home_team' => $request->get('football_result_home_team')
                 ];
+
+                $season = Season::query()->find($game->season_id);
+
+                $homePoints = MatchResults::from(intval($request->get('football_result_home_team')));
+
+                $prePoints =  $season->teams->where('id', '=', $game->home_team_id)->first()->pivot->score;
+
+                $season->teams()->updateExistingPivot($game->home_team_id, ['points' => $prePoints + $homePoints->points()]);
+
+                $awayPoints = MatchResults::from(intval($request->get('football_result_away_team')));
+
+                $prePoints =  $season->teams->where('id', '=', $game->away_team_id)->first()->pivot->score;
+
+                $season->teams()->updateExistingPivot($game->away_team_id, ['points' => $prePoints + $awayPoints->points()]);
 
 
 
@@ -126,10 +161,24 @@ final class GamesController extends Controller
                     'hockey_number_of_goalkeeper_interventions_away_team' => $request->get('hockey_number_of_goalkeeper_interventions_away_team'),
                     'hockey_number_of_blocked_shots_away_team' => $request->get('hockey_number_of_blocked_shots_away_team'),
                     'hockey_number_of_power_play_goals_away_team' => $request->get('hockey_number_of_power_play_goals_away_team'),
-                    'hockey_number_of_buly_won_away_team' => $request->get('hockey_number_of_buly_won_away_team')
+                    'hockey_number_of_buly_won_away_team' => $request->get('hockey_number_of_buly_won_away_team'),
+                    'football_result_away_team' => $request->get('hockey_result_away_team'),
+                    'football_result_home_team' => $request->get('hockey_result_home_team')
                 ];
 
+                $season = Season::query()->find($game->season_id);
 
+                $homePoints = MatchResults::from(intval($request->get('hockey_result_home_team')));
+
+                $prePoints =  $season->teams->where('id', '=', $game->home_team_id)->first()->pivot->score;
+
+                $season->teams()->updateExistingPivot($game->home_team_id, ['points' => $prePoints + $homePoints->points()]);
+
+                $awayPoints = MatchResults::from(intval($request->get('hockey_result_away_team')));
+
+                $prePoints =  $season->teams->where('id', '=', $game->away_team_id)->first()->pivot->score;
+
+                $season->teams()->updateExistingPivot($game->away_team_id, ['points' => $prePoints + $awayPoints->points()]);
 
                 $homePlayersWithAction = $request->get('hockey_players_home');
                 $homeMinutesActions = $request->get('hockey_minutes_home');
@@ -213,8 +262,25 @@ final class GamesController extends Controller
                     'average_first_player' => $request->get('average_first_player'),
                     'count_of_sets_second_player' => $request->get('count_of_sets_second_player'),
                     'count_of_legs_second_player' => $request->get('count_of_legs_second_player'),
-                    'average_second_player' => $request->get('average_second_player')
+                    'average_second_player' => $request->get('average_second_player'),
+                    'darts_result_first_player' => $request->get('darts_result_first_player'),
+                    'darts_result_second_player' => $request->get('darts_result_second_player')
                 ];
+                $season = Season::query()->find($game->season_id);
+
+                $homePoints = MatchResults::from(intval($request->get('darts_result_first_player')));
+
+                $prePoints =  $season->teams->where('id', '=', $game->home_team_id)->first()->pivot->score;
+
+                $season->teams()->updateExistingPivot($game->home_team_id, ['points' => $prePoints + $homePoints->points()]);
+
+                $awayPoints = MatchResults::from(intval($request->get('darts_result_second_player')));
+
+                $prePoints =  $season->teams->where('id', '=', $game->away_team_id)->first()->pivot->score;
+
+                $season->teams()->updateExistingPivot($game->away_team_id, ['points' => $prePoints + $awayPoints->points()]);
+
+
                 $game->parameters = json_encode($params);
                 break;
             }
@@ -237,8 +303,28 @@ final class GamesController extends Controller
                     'number_of_offsides_away_team' => $request->get('number_of_offsides_away_team'),
                     'number_of_fouls_away_team' => $request->get('number_of_fouls_away_team'),
                     'number_of_red_cards_away_team' => $request->get('number_of_red_cards_away_team'),
-                    'number_of_yellow_cards_away_team' => $request->get('number_of_yellow_cards_away_team')
+                    'number_of_yellow_cards_away_team' => $request->get('number_of_yellow_cards_away_team'),
+                    'football_result_away_team' => $request->get('football_result_away_team'),
+                    'football_result_home_team' => $request->get('football_result_home_team')
                 ];
+
+                $previousPointHome = MatchResults::from(intval($game->getMeta('football_result_home_team')))->points();
+
+                $season = Season::query()->find($game->season_id);
+
+                $homePointsNew = MatchResults::from(intval($request->get('football_result_home_team')));
+
+                $prePoints =  $season->teams->where('id', '=', $game->home_team_id)->first()->pivot->points;
+
+                $season->teams()->updateExistingPivot($game->home_team_id, ['points' => $prePoints - $previousPointHome + $homePointsNew->points()]);
+
+                $previousPointAway = MatchResults::from(intval($game->getMeta('football_result_away_team')))->points();
+
+                $awayPointsNew = MatchResults::from(intval($request->get('football_result_away_team')));
+
+                $prePoints =  $season->teams->where('id', '=', $game->away_team_id)->first()->pivot->points;
+
+                $season->teams()->updateExistingPivot($game->away_team_id, ['points' => $prePoints - $previousPointAway + $awayPointsNew->points()]);
 
 
 
@@ -300,9 +386,28 @@ final class GamesController extends Controller
                     'hockey_number_of_goalkeeper_interventions_away_team' => $request->get('hockey_number_of_goalkeeper_interventions_away_team'),
                     'hockey_number_of_blocked_shots_away_team' => $request->get('hockey_number_of_blocked_shots_away_team'),
                     'hockey_number_of_power_play_goals_away_team' => $request->get('hockey_number_of_power_play_goals_away_team'),
-                    'hockey_number_of_buly_won_away_team' => $request->get('hockey_number_of_buly_won_away_team')
+                    'hockey_number_of_buly_won_away_team' => $request->get('hockey_number_of_buly_won_away_team'),
+                    'hockey_result_away_team' => $request->get('hockey_result_away_team'),
+                    'hockey_result_home_team' => $request->get('hockey_result_home_team')
                 ];
 
+                $previousPointHome = MatchResults::from(intval($game->getMeta('hockey_result_home_team')))->points();
+
+                $season = Season::query()->find($game->season_id);
+
+                $homePointsNew = MatchResults::from(intval($request->get('hockey_result_home_team')));
+
+                $prePoints =  $season->teams->where('id', '=', $game->home_team_id)->first()->pivot->points;
+
+                $season->teams()->updateExistingPivot($game->home_team_id, ['points' => $prePoints - $previousPointHome + $homePointsNew->points()]);
+
+                $previousPointAway = MatchResults::from(intval($game->getMeta('hockey_result_away_team')))->points();
+
+                $awayPointsNew = MatchResults::from(intval($request->get('hockey_result_away_team')));
+
+                $prePoints =  $season->teams->where('id', '=', $game->away_team_id)->first()->pivot->points;
+
+                $season->teams()->updateExistingPivot($game->away_team_id, ['points' => $prePoints - $previousPointAway + $awayPointsNew->points()]);
 
 
                 $homePlayersWithAction = $request->get('hockey_players_home');

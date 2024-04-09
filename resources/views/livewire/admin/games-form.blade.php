@@ -227,6 +227,16 @@
                                              value="{{ $game->getMeta(\App\enums\FootballParameters::NUMBER_OF_YELLOW_CARDS_HOME_TEAM->value) }}"
                         />
                     </div>
+
+
+                </div>
+                <div class="w-6/12">
+                    <x-admin.forms.select name="football_result_home_team"
+                                          id="football_result_away_team"
+                                          label="Výsledek hostující tým"
+                                          :options="\App\enums\MatchResults::FootballOptions()"
+                                          selected="{{ $game->getMeta('football_result_home_team')}}"
+                    />
                 </div>
 
                 <h2 class="mt-2 font-bold">Zaznamenat akci k hráči</h2>
@@ -423,6 +433,18 @@
                                              value="{{ $game->getMeta(\App\enums\FootballParameters::NUMBER_OF_YELLOW_CARDS_AWAY_TEAM->value) }}"
                         />
                     </div>
+
+
+
+                </div>
+                <div class="w-6/12">
+                    <x-admin.forms.select name="football_result_away_team"
+                                          id="football_result_away_team"
+                                          label="Výsledek hostující tým"
+                                          :options="\App\enums\MatchResults::FootballOptions()"
+                                          selected="{{ $game->getMeta('football_result_away_team')}}"
+
+                    />
                 </div>
                 <h2 class="mt-2 font-bold">Zaznamenat akci k hráči</h2>
                 <div x-data="{ footballPlayerAwayCount: {{ $game->away_actions_count}} }">
@@ -618,6 +640,15 @@
                 </div>
             </div>
 
+            <div class="w-6/12">
+                <x-admin.forms.select name="hockey_result_home_team"
+                                      id="hockey_result_home_team"
+                                      label="Výsledek domácí tým"
+                                      :options="\App\enums\MatchResults::hockeyOptions()"
+                                      selected="{{ $game->getMeta('hockey_result_home_team')}}"
+                />
+            </div>
+
            <h2 class="mt-2 font-bold">Zaznamenat akci k hráči</h2>
             <div x-data="{ hockeyPlayerHomeCount: {{ $game->hockey_home_actions_count}} }">
                 @if(is_null($game->id))
@@ -806,6 +837,15 @@
                                          value="{{ $game->getMeta(\App\enums\HockeyParameters::HOCKEY_NUMBER_OF_BULY_WON_AWAY_TEAM->value) }}"
                     />
                 </div>
+            </div>
+
+            <div class="w-6/12">
+                <x-admin.forms.select name="hockey_result_away_team"
+                                      id="hockey_result_away_team"
+                                      label="Výsledek hostující tým"
+                                      :options="\App\enums\MatchResults::hockeyOptions()"
+                                      selected="{{ $game->getMeta('hockey_result_home_team')}}"
+                />
             </div>
             <h2 class="mt-2 font-bold">Zaznamenat akci k hráči</h2>
 
