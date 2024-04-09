@@ -17,7 +17,13 @@ class MatchesByDay extends Component
 
     public Collection $leaguesWithMatches;
 
-    public function mount(Carbon $date = null) {
+    public bool $hasNextMatches = true;
+
+    public int $sport;
+
+    public function mount(int $sport, Carbon $date = null) {
+        $this->sport = $sport;
+
         if(is_null($date)) {
             $this->date = Carbon::now();
             $this->inputDate = $this->date->format('Y-m-d');
@@ -29,7 +35,20 @@ class MatchesByDay extends Component
         $this->leaguesWithMatches = League::query()
             ->whereHas('matches', function (Builder $query) {
                 $query->where('date_of_match', '=',  $this->date->format('Y-m-d'));
-            })->get();
+            })
+            ->where('sport_id', '=', $this->sport)
+            ->get();
+
+        $nextDatesLeagues =  League::query()
+            ->whereHas('matches', function (Builder $query) {
+                $query->whereDate('date_of_match', '>',  $this->date->format('Y-m-d'));
+            })
+            ->where('sport_id', '=', $this->sport)
+            ->first();
+
+
+        $this->hasNextMatches = !is_null($nextDatesLeagues);
+
     }
 
     public function render()
@@ -45,9 +64,38 @@ class MatchesByDay extends Component
             $this->leaguesWithMatches = League::query()
                 ->whereHas('matches', function (Builder $query){
                     $query->whereDate('date_of_match', '=',  $this->date->format('Y-m-d'));
-                })->get();
+                })->where('sport_id', '=', $this->sport)->get();
+
+            $nextDatesLeagues =  League::query()
+                ->whereHas('matches', function (Builder $query) {
+                    $query->whereDate('date_of_match', '>',  $this->date->format('Y-m-d'));
+                })->where('sport_id', '=', $this->sport)->first();
+
+
+
+            $this->hasNextMatches = !is_null($nextDatesLeagues);
 
 
         }
+    }
+
+    public function move() {
+        $nextDatesLeagues =  League::query()
+            ->whereHas('matches', function (Builder $query) {
+                $query->whereDate('date_of_match', '>',  $this->date->format('Y-m-d'));
+            })->where('sport_id', '=', $this->sport)->first();
+
+        if(is_null($nextDatesLeagues)) {
+            $this->hasNextMatches = false;
+            return;
+        }
+
+
+        $this->date = $nextDatesLeagues->matches->first()->date_of_match;
+        $this->inputDate = $this->date->format('Y-m-d');
+
+        $this->leaguesWithMatches = League::query()->whereHas('matches', function (Builder $query) {
+            $query->whereDate('date_of_match', '>',  $this->date->format('Y-m-d'));
+        })->where('sport_id', '=', $this->sport)->get();
     }
 }
