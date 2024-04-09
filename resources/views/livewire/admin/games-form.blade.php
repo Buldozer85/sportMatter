@@ -260,11 +260,10 @@
                             </div>
                     @else
                         @if($sportName === 'Fotbal' && !is_null($game->getMeta(\App\enums\FootballParameters::ACTIONS_HOME->value)))
+                            <div id="ref" x-ref="footBallHomePlayerContainer">
                             @foreach($game->getMeta(\App\enums\FootballParameters::ACTIONS_HOME->value) as $key => $action)
 
                                 @foreach($action as $minuteAction)
-
-                                    <div x-ref="footBallHomePlayerContainer">
                                         <div class="flex flex-row gap-5">
                                             <div class="w-6/12">
                                                 <x-admin.forms.input
@@ -292,9 +291,10 @@
                                                 />
                                             </div>
                                         </div>
-                                    </div>
+
                                 @endforeach
                             @endforeach
+                            </div>
                         @else
                             <div  x-ref="footBallHomePlayerContainer">
                                 <div class="flex flex-row gap-5">
@@ -456,11 +456,9 @@
                         </div>
                     @else
                         @if($sportName === 'Fotbal' && !is_null($game->getMeta(\App\enums\FootballParameters::ACTIONS_AWAY->value)))
+                            <div x-ref="awayFootballPlayerContainer">
                             @foreach($game->getMeta(\App\enums\FootballParameters::ACTIONS_AWAY->value) as $key => $action)
-
                                 @foreach($action as $minuteAction)
-
-                                    <div x-ref="awayFootballPlayerContainer">
                                         <div class="flex flex-row gap-5" >
                                             <div class="w-6/12">
                                                 <x-admin.forms.input
@@ -488,10 +486,9 @@
                                                 />
                                             </div>
                                         </div>
-
-                                    </div>
                                 @endforeach
                             @endforeach
+                            </div>
                         @else
                             <div  x-ref="awayFootballPlayerContainer">
                                 <div class="flex flex-row gap-5">
@@ -653,11 +650,9 @@
                     </div>
                 @else
                     @if($sportName === 'Hokej' && !is_null($game->getMeta(\App\enums\HockeyParameters::HOCKEY_ACTIONS_HOME->value)))
+                        <div x-ref="hockeyPlayersHomeContainer">
                     @foreach($game->getMeta(\App\enums\HockeyParameters::HOCKEY_ACTIONS_HOME->value) as $key => $action)
-
                         @foreach($action as $minuteAction)
-
-                            <div x-ref="hockeyPlayersHomeContainer">
                                <div class="flex flex-row gap-5">
                                    <div class="w-6/12">
                                        <x-admin.forms.input
@@ -685,9 +680,10 @@
                                        />
                                    </div>
                                </div>
-                            </div>
+
                         @endforeach
                     @endforeach
+                        </div>
                     @else
                         <div x-ref="hockeyPlayersHomeContainer">
                             <div class="flex flex-row gap-5">
@@ -844,9 +840,10 @@
                     </div>
                 @else
                @if($sportName === 'Hokej' && !is_null($game->getMeta(\App\enums\HockeyParameters::HOCKEY_ACTIONS_AWAY->value)))
+                        <div x-ref="hockeyAwayPlayersContainer">
                     @foreach($game->getMeta(\App\enums\HockeyParameters::HOCKEY_ACTIONS_AWAY->value) as $key => $action)
                         @foreach($action as $minuteAction)
-                            <div x-ref="hockeyAwayPlayersContainer">
+
                                 <div class="flex flex-row gap-5">
                                     <div class="w-6/12">
                                         <x-admin.forms.input
@@ -874,9 +871,10 @@
                                         />
                                     </div>
                                 </div>
-                            </div>
+
                         @endforeach
                     @endforeach
+                        </div>
                     @else
                         <div x-ref="hockeyAwayPlayersContainer">
                             <div class="flex flex-row gap-5">
