@@ -1,7 +1,16 @@
 <div class="space-y-8">
-    <div class="calendar flex justify-end items-end">
-        <x-app.forms.input type="date" id="date_of_match" wire:model.live="inputDate" name="date"/>
+    <div class="flex flex-row justify-end items-baseline">
+        @if(is_null($leaguesWithMatches->first()) && $hasNextMatches)
+            <div class="calendar flex justify-end items-end">
+                <button class="p-[5px] !px-4 text-center" type="button" id="move_to_next" wire:click="move()">Přejít na nejbližší hrací den </button>
+            </div>
+        @endif
+
+        <div class="calendar flex justify-end items-end">
+            <x-app.forms.input type="date" id="date_of_match" wire:model.live="inputDate" name="date"/>
+        </div>
     </div>
+
 
     @foreach($leaguesWithMatches as $leagueWithMatches)
         <x-app.matches.matchesContainer date="{{ $date->format('d.n.Y') }}" day_name="{{ getDayName($date) }}" name_of_league="{{ $leagueWithMatches->name }}" img_src="img/football-ball-soccer-svgrepo-com.png">

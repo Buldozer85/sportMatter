@@ -7,7 +7,7 @@
             @endforeach
         </x-app.add_panels.additional_panel>
         <div class="result-content">
-            <livewire:app.matches-by-day></livewire:app.matches-by-day>
+            <livewire:app.matches-by-day sport="{{ $dartsLeagues->first()->sport->id }}"></livewire:app.matches-by-day>
         </div>
     </div>
 </x-app.app>
