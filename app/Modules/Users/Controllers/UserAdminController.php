@@ -4,6 +4,7 @@ namespace App\Modules\Users\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserProfileRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Modules\Users\Models\User;
 use http\Env\Request;
@@ -53,10 +54,18 @@ class UserAdminController extends Controller
         return redirect()->route('admin.users.show-update', $user->id);
     }
 
-    public function delete(User $user, Request $request)
+    public function updateProfile(UpdateUserProfileRequest $request)
     {
-        $user->delete();
+        user()->first_name = $request->get('first_name');
+        user()->last_name = $request->get('last_name');
+        user()->email = $request->get('email');
 
-        return redirect()->route('admin.users.index');
+        if(!is_null($request->get('password'))) {
+            user()->password = Hash::make($request->get('password'));
+        }
+
+        user()->save();
+
+        return redirect()->route('dashboard.profile');
     }
 }

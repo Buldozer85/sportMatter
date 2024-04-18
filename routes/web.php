@@ -4,8 +4,9 @@ use App\Http\Controllers\App\DartController;
 use App\Http\Controllers\App\FootballController;
 use App\Http\Controllers\App\HockeyController;
 use App\Http\Controllers\App\MatchController;
-use App\Http\Controllers\App\UserController;
+
 use App\Modules\Users\Controllers\AuthController;
+use App\Modules\Users\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,11 +49,8 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 
-Route::controller(\App\Modules\Users\Controllers\UserController::class)->prefix('/user')->group(function () {
-    Route::get('/vytvorit', 'showCreate')->name('users.show-new');
-    Route::get('/{user}', 'showUpdate')->name('users.show-update');
-    Route::post('/create', 'create')->name('users.create');
-    Route::post('/update/{user}', 'update')->name('users.update');
+Route::controller(UserController::class)->group(function () {
+    Route::post('/profil/update', 'update')->name('app.users.profile.update');
 });
 
 
