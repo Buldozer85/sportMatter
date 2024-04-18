@@ -7,6 +7,7 @@ use App\Http\Controllers\App\LeagueController;
 use App\Http\Controllers\App\MatchController;
 
 use App\Http\Controllers\App\SeasonController;
+
 use App\Modules\Users\Controllers\AuthController;
 use App\Modules\Users\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
