@@ -4,59 +4,36 @@ namespace App\Modules\Users\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserProfileRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Modules\Users\Models\User;
 use http\Env\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function create(CreateUserRequest $request)
+    public function update(UpdateUserProfileRequest $request)
     {
-       $user = new User();
-
-       $user->first_name = $request->get('first_name');
-       $user->last_name = $request->get('last_name');
-       $user->email = $request->get('email');
-       $user->password = Hash::make($request->get('password'));
-       $user->access = $request->get('access');
-
-       $user->save();
-
-       return redirect()->route('admin.users.show-update', $user->id);
-    }
-
-    public function showCreate()
-    {
-        return view('users.new');
-    }
-
-    public function showUpdate(User $user)
-    {
-        return view('app.pages.user.profile');
-    }
-
-    public function update(User $user, UpdateUserRequest $request)
-    {
-        $user->first_name = $request->get('first_name');
-        $user->last_name = $request->get('last_name');
-        $user->email = $request->get('email');
+        user()->first_name = $request->get('first_name');
+        user()->last_name = $request->get('last_name');
+        user()->email = $request->get('email');
 
         if(!is_null($request->get('password'))) {
-            $user->password = Hash::make($request->get('password'));
+            user()->password = Hash::make($request->get('password'));
         }
 
-        $user->access = $user->getAccess();
+        user()->save();
 
-        $user->save();
-
-        return view('app.pages.user.profile');
+        return redirect()->route('user.profile');
     }
 
-    public function delete(User $user)
+    public function index()
     {
-        $user->delete();
+        if(is_null(Auth::user())) {
+            return redirect()->route('hockey.index');
+        }
 
-        return redirect()->route('user.index');
+        return view('app.pages.user.profile');
     }
 }
