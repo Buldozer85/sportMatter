@@ -42,6 +42,6 @@ class AuthAdminController extends Controller
     public function logut()
     {
         Auth::logout();
-        return redirect()->route('show-login');
+        return redirect()->route('admin.show-login');
     }
 }

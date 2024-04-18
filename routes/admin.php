@@ -5,7 +5,6 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Modules\Countries\Controllers\CountriesController;
 use App\Modules\Games\Controllers\GamesController;
 use App\Modules\Leagues\Controllers\LeaguesController;
-use App\Modules\Leagues\Models\League;
 use App\Modules\Players\Controllers\PlayersController;
 use App\Modules\Referees\Controllers\RefereesController;
 use App\Modules\Seasons\Controllers\SeasonsController;
@@ -13,7 +12,7 @@ use App\Modules\Sports\Controllers\SportController;
 use App\Modules\Stadiums\Controllers\StadiumsController;
 use App\Modules\Teams\Controllers\TeamsController;
 use App\Modules\Users\Controllers\AuthAdminController;
-use App\Modules\Users\Controllers\UserController;
+use App\Modules\Users\Controllers\UserAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,32 +42,12 @@ Route::middleware('admin')->group(function () {
         Route::get('/profil', 'profile')->name('dashboard.profile');
     });
 
-    Route::view("/uzivatel", "admin.users.new");
-    Route::view("/uzivatel/{id}", "admin.users.update");
-    Route::view("/tym", "admin.teams.new");
-    Route::view("/tym/{id}", "admin.teams.update");
-    Route::view("/stadion", "admin.stadiums.new");
-    Route::view("/stadion/{id}", "admin.stadiums.update");
-    Route::view("/sport/{id}", "admin.sports.update");
-    Route::view("/vytvoritSport", "admin.sports.new");
-    Route::view("/sezona", "admin.seasons.new");
-    Route::view("/sezona/{id}", "admin.seasons.update");
-    Route::view("/vytvoritRozhodci", "admin.referees.new");
-    Route::view("/upravitRozhodci/{id}", "admin.referees.update");
-    Route::view("/upravitHrace/{id}", "admin.players.update");
-    Route::view("/vytvoritHrace", "admin.players.new");
-    Route::view("/vytvoritZeme", "admin.countries.new");
-    Route::view("/upravitZeme/{id}", "admin.countries.update");
-    Route::view("/liga", "admin.leagues.new");
-    Route::view("/liga/{id}", "admin.leagues.update");
-    Route::view("/vytvoritZapas", "admin.games.new");
-    Route::view("/upravitZapas/{id}", "admin.games.update");
-
-    Route::controller(UserController::class)->prefix('/uzivatel')->group(function () {
+    Route::controller(UserAdminController::class)->prefix('/uzivatel')->group(function () {
         Route::get('/vytvorit', 'showCreate')->name('admin.users.show-new');
         Route::get('/{user}', 'showUpdate')->name('admin.users.show-update');
         Route::post('/create', 'create')->name('admin.users.create');
         Route::post('/update/{user}', 'update')->name('admin.users.update');
+        Route::post('profil/update', 'updateProfile')->name('admin.users.update-profile');
     });
 
     Route::controller(SportController::class)->prefix('/sport')->group(function () {
@@ -137,7 +116,7 @@ Route::middleware('admin')->group(function () {
 
 
 Route::controller(AuthAdminController::class)->group(function () {
-    Route::get('/prihlasit', 'showLogin')->name('show-login');
-    Route::post('/login', 'login')->middleware('guest')->name('login');
-    Route::get('logout', 'logut')->middleware('admin')->name('logout');
+    Route::get('/prihlasit', 'showLogin')->name('admin.show-login');
+    Route::post('/login', 'login')->middleware('guest')->name('admin.login');
+    Route::get('logout', 'logut')->middleware('admin')->name('admin.logout');
 });
