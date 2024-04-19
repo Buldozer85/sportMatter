@@ -7,9 +7,9 @@ use Livewire\Component;
 
 class AddFavoriteMatch extends Component
 {
-    public int $match;
+    public string $match;
 
-    public function mount(int $match): void
+    public function mount(string $match): void
     {
         $this->match = $match;
 

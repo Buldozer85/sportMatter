@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Modules\Stadiums\Models;
 
 use Carbon\Carbon;
+use Database\Factories\StadiumFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,6 +18,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class Stadium extends Model
 {
+    use HasFactory;
+
     protected $table = 'stadiums';
+
+    protected static function newFactory(): StadiumFactory
+    {
+        return StadiumFactory::new();
+    }
 
 }

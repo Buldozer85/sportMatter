@@ -11,7 +11,9 @@ use App\Modules\Seasons\Models\Season;
 use App\Modules\Teams\Models\Team;
 use App\Modules\Users\Models\User;
 use Carbon\Carbon;
+use Database\Factories\MatchFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -36,6 +38,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Game extends Model
 {
+    use HasFactory;
+
     protected $table = 'matches';
 
     protected $casts = [
@@ -229,5 +233,10 @@ class Game extends Model
 
            return array_merge($this->getMeta($sport . 'actions_home'), $this->getMeta($sport . 'actions_away'));
         });
+    }
+
+    protected static function newFactory(): MatchFactory
+    {
+        return MatchFactory::new();
     }
 }

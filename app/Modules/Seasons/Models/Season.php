@@ -11,7 +11,9 @@ use App\Modules\Teams\Models\Team;
 use App\Services\Enums\CastTypeEnum;
 
 use Carbon\Carbon;
+use Database\Factories\SeasonFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -28,6 +30,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 final class Season extends Model
 {
+    use HasFactory;
     public function league(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(League::class);
@@ -54,5 +57,10 @@ final class Season extends Model
             return Attribute::make(get: fn() => $this->yearStart->format('Y'));
         }
         return Attribute::make(get: fn() => $this->yearStart->format('Y'). '/' . $this->yearEnd->format('Y'));
+    }
+
+    protected static function newFactory(): SeasonFactory
+    {
+        return SeasonFactory::new();
     }
 }

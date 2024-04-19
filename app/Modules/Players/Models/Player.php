@@ -7,7 +7,9 @@ namespace App\Modules\Players\Models;
 use App\Modules\Countries\Models\Country;
 use App\Modules\Teams\Models\Team;
 use Carbon\Carbon;
+use Database\Factories\PlayerFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -23,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Player extends Model
 {
+    use HasFactory;
 
     public function fullName(): Attribute
     {
@@ -42,5 +45,10 @@ class Player extends Model
     protected $casts = [
       'birthdate' => 'date'
     ];
+
+    protected static function newFactory(): PlayerFactory
+    {
+        return PlayerFactory::new();
+    }
 
 }

@@ -6,7 +6,9 @@ namespace App\Modules\Referees\Models;
 
 use App\Modules\Sports\Models\Sport;
 use Carbon\Carbon;
+use Database\Factories\RefereeFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -21,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Referee extends Model
 {
+    use HasFactory;
     public function sport(): BelongsTo
     {
         return $this->belongsTo(Sport::class);
@@ -29,6 +32,11 @@ class Referee extends Model
     public function fullName(): Attribute
     {
         return Attribute::make(get: fn() =>  $this->first_name . " " . $this->last_name);
+    }
+
+    protected static function newFactory(): RefereeFactory
+    {
+        return RefereeFactory::new();
     }
 
 }
