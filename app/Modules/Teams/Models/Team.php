@@ -8,6 +8,8 @@ use App\Modules\Leagues\Models\League;
 use App\Modules\Seasons\Models\Season;
 use App\Modules\Stadiums\Models\Stadium;
 use Carbon\Carbon;
+use Database\Factories\TeamFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -23,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 final class Team extends Model
 {
+    use HasFactory;
     public function stadium(): BelongsTo
     {
         return $this->belongsTo(Stadium::class);
@@ -41,5 +44,10 @@ final class Team extends Model
     public function getMatchesCountInSeason(int $season_id)
     {
         return $this->seasons->where('id', '=', $season_id)->count();
+    }
+
+    protected static function newFactory(): TeamFactory
+    {
+        return TeamFactory::new();
     }
 }

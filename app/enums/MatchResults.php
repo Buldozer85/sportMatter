@@ -29,6 +29,18 @@ enum MatchResults: int
         ];
     }
 
+    public static function hockeyLabels(): array
+    {
+        return [
+            self::WIN->value,
+            self::WIN_IN_EXTENSION->value,
+            self::WIN_ON_PENALTIES->value,
+            self::LOSE->value,
+            self::LOSE_IN_EXTENSION->value,
+            self::LOSE_ON_PENALTIES->value
+        ];
+    }
+
     public static function FootballOptions(): array
     {
         return [
@@ -39,6 +51,16 @@ enum MatchResults: int
             self::TIDE->value => 'Remíza'
         ];
     }
+    public static function FootballLabels(): array
+    {
+        return [
+            self::WIN->value,
+            self::WIN_ON_PENALTIES->value,
+            self::LOSE->value,
+            self::LOSE_ON_PENALTIES->value,
+            self::TIDE->value
+        ];
+    }
 
     public static function DartsOptions(): array
     {
@@ -46,6 +68,11 @@ enum MatchResults: int
             self::WIN->value => 'Výhra',
             self::LOSE->value => 'Prohra',
         ];
+    }
+
+    public static function DartsLabels(): array
+    {
+        return ['Výhra', 'Prohra'];
     }
 
     public function points(): int

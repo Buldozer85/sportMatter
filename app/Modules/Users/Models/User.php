@@ -10,6 +10,7 @@ use App\enums\Role;
 use App\Modules\Games\Models\Game;
 use App\Services\Enums\CastTypeEnum;
 use Carbon\Carbon;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -131,5 +132,10 @@ class User extends Authenticatable
     public function favoriteMatches(): BelongsToMany
     {
         return $this->belongsToMany(Game::class, 'favorite_matches', 'user_id', 'match_id');
+    }
+
+    protected static function newFactory(): UserFactory
+    {
+        return UserFactory::new();
     }
 }

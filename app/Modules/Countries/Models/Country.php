@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Modules\Countries\Models;
 
 use Carbon\Carbon;
+use Database\Factories\CountryFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,5 +18,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class Country extends Model
 {
+    use HasFactory;
+
+    protected static function newFactory(): CountryFactory
+    {
+        return CountryFactory::new();
+    }
 
 }

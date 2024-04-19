@@ -12,6 +12,8 @@ use App\Modules\Seasons\Models\Season;
 use App\Modules\Sports\Models\Sport;
 use App\Services\Enums\CastTypeEnum;
 use Carbon\Carbon;
+use Database\Factories\LeagueFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -27,6 +29,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class League extends Model
 {
+
+    use HasFactory;
     public const ATTR_ID = 'id';
 
     public const ATTR_NAME = 'name';
@@ -79,5 +83,10 @@ class League extends Model
     public function seasons(): HasMany
     {
         return $this->hasMany(Season::class, 'league_id');
+    }
+
+    protected static function newFactory(): LeagueFactory
+    {
+        return LeagueFactory::new();
     }
 }
