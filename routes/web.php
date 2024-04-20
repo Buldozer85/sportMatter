@@ -6,8 +6,10 @@ use App\Http\Controllers\App\HockeyController;
 use App\Http\Controllers\App\LeagueController;
 use App\Http\Controllers\App\MatchController;
 
+use App\Http\Controllers\App\PlayersController;
 use App\Http\Controllers\App\SeasonController;
 
+use App\Http\Controllers\App\TeamsController;
 use App\Modules\Users\Controllers\AuthController;
 use App\Modules\Users\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -62,6 +64,14 @@ Route::controller(SeasonController::class)->prefix('/rocnik')->group(function ()
 
 Route::controller(UserController::class)->group(function () {
     Route::post('/profil/update', 'update')->name('app.users.profile.update');
+});
+
+Route::controller(TeamsController::class)->prefix('/tym')->group(function () {
+    Route::get('/{team}', 'index')->name('team.detail');
+});
+
+Route::controller(PlayersController::class)->prefix('/hrac')->group(function () {
+    Route::get('/{player}', 'index')->name('player.detail');
 });
 
 
