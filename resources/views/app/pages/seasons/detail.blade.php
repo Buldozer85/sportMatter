@@ -51,12 +51,14 @@
                                             @endphp
                                             @foreach($season->teams as $team)
                                             <tr>
-                                                <a>
+
                                                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">{{ $i }}</td>
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $team->name }}</td>
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $team->getMatchesCountInSeason($season->id) }}</td>
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $team->pivot->points }}</td>
-                                                </a>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">    <a href="{{ route('team.detail', $team->id) }}">Detail</a></td>
+
+
                                             </tr>
                                             @php
                                                 $i++;

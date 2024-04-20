@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
 * @property int $id
@@ -49,6 +50,11 @@ class Player extends Model
     protected static function newFactory(): PlayerFactory
     {
         return PlayerFactory::new();
+    }
+
+    public function transfers(): BelongsToMany
+    {
+        return $this->belongsToMany(Team::class, 'player_history', 'player_id', 'team_id')->withPivot('date_of_transfer')->orderByPivot('date_of_transfer', 'DESC');
     }
 
 }
