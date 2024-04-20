@@ -2,6 +2,7 @@
 
 namespace App\Modules\Games\Models;
 
+use App\enums\DartsParameters;
 use App\enums\FootballActions;
 use App\enums\FootballParameters;
 use App\enums\HockeyParameters;
@@ -171,6 +172,10 @@ class Game extends Model
     public function score(): Attribute
     {
         return Attribute::make(function () {
+            if($this->league->sport->name === 'Šipky') {
+                return Attribute::make(get: fn() =>  $this->getMeta(DartsParameters::COUNT_OF_SETS_FIRST_PLAYER->value) . '-' . $this->getMeta(DartsParameters::COUNT_OF_LEGS_FIRST_PLAYER->value) . ':' . $this->getMeta(DartsParameters::COUNT_OF_SETS_SECOND_PLAYER->value) ?? '0' . '-' . $this->getMeta(DartsParameters::COUNT_OF_LEGS_SECOND_PLAYER->value) ?? '-');
+            }
+
             $sport = match ($this->league->sport->name) {
                 'Hokej' => 'hockey_',
                 default => ''
@@ -189,6 +194,10 @@ class Game extends Model
             return null;
         }
 
+        if($this->league->sport->name === 'Šipky') {
+            return Attribute::make(get: fn() =>  $this->getMeta(DartsParameters::COUNT_OF_SETS_FIRST_PLAYER->value) . '-' . $this->getMeta(DartsParameters::COUNT_OF_LEGS_FIRST_PLAYER->value) ?? '-');
+        }
+
         $sport = match ($this->league->sport->name) {
             'Hokej' => 'hockey_',
             default => ''
@@ -199,6 +208,9 @@ class Game extends Model
 
     public function awayScore(): Attribute
     {
+        if($this->league->sport->name === 'Šipky') {
+            return Attribute::make(get: fn() =>  $this->getMeta(DartsParameters::COUNT_OF_SETS_SECOND_PLAYER->value) . '-' . $this->getMeta(DartsParameters::COUNT_OF_LEGS_SECOND_PLAYER->value) ?? '-');
+        }
         $sport = match ($this->league->sport->name) {
             'Hokej' => 'hockey_',
             default => ''
