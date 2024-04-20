@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\enums\Role;
 use App\Modules\Games\Models\Game;
 
 class GameModelTable extends AbstractModelTable
@@ -17,5 +18,14 @@ class GameModelTable extends AbstractModelTable
         $game->referees()->detach();
 
         $game->delete();
+    }
+
+    protected function query(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        if(user()->access == Role::EDITOR) {
+            return $this->basicQuery()->where('supervisor_id', '=' , user()->id)->paginate($this->perPage);
+        }
+
+        return $this->basicQuery()->paginate($this->perPage);
     }
 }

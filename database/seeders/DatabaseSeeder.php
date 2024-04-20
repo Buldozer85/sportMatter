@@ -25,13 +25,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-       $this->createUsers();
+       /*$this->createUsers();
        $this->createSports();
        $this->createCountries();
        $this->createReferees();
        $this->createStadiums();
        $this->createLeagues();
-       $this->createSeasons();
+       $this->createSeasons();*/
        $this->createPlayers();
        $this->createMatches();
     }

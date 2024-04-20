@@ -24,7 +24,7 @@ class CreateGameRequest extends FormRequest
         switch ($sportName) {
             case "Fotbal":
                 $rules['count_of_goals_home_team'] = ['nullable', 'integer'];
-                $rules['holding_the_ball_home_team'] = ['nullable', 'integer'];
+                $rules['holding_the_ball_home_team'] = ['nullable', 'number'];
                 $rules['number_of_shots_on_goal_home_team'] = ['nullable', 'integer'];
                 $rules['number_of_shots_home_team'] = ['nullable', 'integer'];
                 $rules['number_of_corner_home_team'] = ['nullable', 'integer'];
@@ -33,7 +33,7 @@ class CreateGameRequest extends FormRequest
                 $rules['number_of_red_cards_home_team'] = ['nullable', 'integer'];
                 $rules['number_of_yellow_cards_home_team'] = ['nullable', 'integer'];
                 $rules['count_of_goals_away_team'] = ['nullable', 'integer'];
-                $rules['holding_the_ball_away_team'] = ['nullable', 'integer'];
+                $rules['holding_the_ball_away_team'] = ['nullable', 'numeric'];
                 $rules['number_of_shots_on_goal_away_team'] = ['nullable', 'integer'];
                 $rules['number_of_shots_away_team'] = ['nullable', 'integer'];
                 $rules['number_of_corner_away_team'] = ['nullable', 'integer'];
@@ -128,7 +128,7 @@ class CreateGameRequest extends FormRequest
             'number_of_yellow_cards_home_team.required' => 'Počet žlutých karet domácího týmu musí být vyplněno',
             'number_of_yellow_cards_home_team.integer' => 'Počet žlutých domácího týmu musí být číslo',
             'holding_the_ball_home_team.required' => 'Držení míče domácího týmu je povinné',
-            'holding_the_ball_home_team.integer' => 'Držení míče domácího týmu musí být číslo',
+            'holding_the_ball_home_team.numeric' => 'Držení míče domácího týmu musí být číslo',
             'count_of_goals_home_team.required' => 'Počet gólů domácího týmu je povinný údaj',
             'players_home.array' => 'Seznám hráčů musí být pole',
             'minutes_home.array' => 'Seznám minut musí být pole',
@@ -149,7 +149,7 @@ class CreateGameRequest extends FormRequest
             'number_of_yellow_cards_away_team.required' => 'Počet žlutých karet hostujícího týmu musí být vyplněno',
             'number_of_yellow_cards_away_team.integer' => 'Počet žlutých hostujícího týmu musí být číslo',
             'holding_the_ball_away_team.required' => 'Držení míče hostujícího týmu je povinné',
-            'holding_the_ball_away_team.integer' => 'Držení míče hostujícího týmu musí být číslo',
+            'holding_the_ball_away_team.numeric' => 'Držení míče hostujícího týmu musí být číslo',
             'count_of_goals_away_team.required' => 'Počet gólů hostujícího týmu je povinný údaj',
 
             'players_away.array' => 'Seznám hráčů musí být pole',

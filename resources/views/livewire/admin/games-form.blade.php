@@ -33,7 +33,6 @@
                 <x-admin.forms.select
                     wire:model.live="selectedHome"
                     label="Domácí tým/hráč"
-                    {{--         TODO: měnit podle selected sportu, výsledky zapisovat v params           --}}
                     id="home_team"
                     name="home_team"
                     :options="$homeTeamOptions"
@@ -74,14 +73,32 @@
     </div>
     <div x-data="{refereeCount: {{ $game->referees->count() }} }">
         <div class="flex flex-row gap-5">
-            <div class="w-full" x-ref="teamContainer">
-                <x-admin.forms.select
-                    label="Rozhodčí"
-                    id=""
-                    name="referees[]"
-                    :options="$refereesOptions"
-                />
-            </div>
+            @if(is_null($game->id))
+                <div class="w-full" x-ref="teamContainer">
+                    <x-admin.forms.select
+                        label="Rozhodčí"
+                        id=""
+                        name="referees[]"
+                        :options="$refereesOptions"
+                    />
+                </div>
+            @else
+                <div class="w-full" x-ref="teamContainer">
+                @foreach($game->referees as $referee)
+
+                        <x-admin.forms.select
+                            label="Rozhodčí"
+                            id=""
+                            name="referees[]"
+                            :options="$refereesOptions"
+                            :selected="$referee->id"
+                        />
+
+                @endforeach
+                </div>
+            @endif
+
+
         </div>
         <div class="mt-3">
             <button type="button" class="w-fit h-fit px-3 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" @click="refereeCount++; $refs.teamContainer.appendChild($refs.teamContainer.children[0].cloneNode(true))"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

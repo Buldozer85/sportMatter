@@ -173,7 +173,7 @@ class Game extends Model
     {
         return Attribute::make(function () {
             if($this->league->sport->name === 'Šipky') {
-                return Attribute::make(get: fn() =>  $this->getMeta(DartsParameters::COUNT_OF_SETS_FIRST_PLAYER->value) . '-' . $this->getMeta(DartsParameters::COUNT_OF_LEGS_FIRST_PLAYER->value) . ':' . $this->getMeta(DartsParameters::COUNT_OF_SETS_SECOND_PLAYER->value) ?? '0' . '-' . $this->getMeta(DartsParameters::COUNT_OF_LEGS_SECOND_PLAYER->value) ?? '-');
+                return $this->getMeta(DartsParameters::COUNT_OF_SETS_FIRST_PLAYER->value) . '-' . $this->getMeta(DartsParameters::COUNT_OF_LEGS_FIRST_PLAYER->value) . ':' . $this->getMeta(DartsParameters::COUNT_OF_SETS_SECOND_PLAYER->value) . '-' . $this->getMeta(DartsParameters::COUNT_OF_LEGS_SECOND_PLAYER->value) ?? '-';
             }
 
             $sport = match ($this->league->sport->name) {

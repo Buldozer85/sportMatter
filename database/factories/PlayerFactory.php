@@ -17,7 +17,7 @@ class PlayerFactory extends Factory
         return [
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
-            'birthdate' => $this->faker->dateTimeBetween(['60 years', '-16 years']),
+            'birthdate' => $this->faker->dateTimeBetween('-60 years', '-16 years'),
             'country_id' => Country::query()->inRandomOrder()->first(),
             'team_id' => Team::query()->inRandomOrder()->first(),
             'created_at' => Carbon::now(),

@@ -455,10 +455,11 @@ final class GamesController extends Controller
         $game->save();
         $game->referees()->detach();
 
+
         foreach ($request->get('referees') as $referee) {
             $game->referees()->attach($referee);
-        }
 
+        }
 
         return redirect()->route('admin.games.show-update', $game->id);
     }

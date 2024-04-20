@@ -108,9 +108,9 @@ Route::middleware('admin')->group(function () {
 
     Route::controller(GamesController::class)->prefix('/zapas')->group(function () {
         Route::get('/vytvorit', 'showCreate')->name('admin.games.show-create');
-        Route::get('/{game}', 'showUpdate')->name('admin.games.show-update');
-        Route::post('/create', 'create')->name('admin.games.create');
-        Route::post('/update/{game}', 'update')->name('admin.games.update');
+        Route::get('/{game}', 'showUpdate')->name('admin.games.show-update')->can('view', 'game');
+        Route::post('/create', 'create')->name('admin.games.create')->can('create', 'game');
+        Route::post('/update/{game}', 'update')->name('admin.games.update')->can('update', 'game');
     });
 });
 
