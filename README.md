@@ -17,8 +17,53 @@ Pro jednoduché spuštění aplikace na lokálním vývojovém prostředí je za
     1. <b>docker-compose exec app composer dump-autoload</b>
     2. <b>docker-compose exec app composer install</b>
     3. <b>docker-compose exec app php artisan key:generate</b>
-    4. <b>docker-compose exec app php npm install</b>
+    4. <b>docker-compose exec app php artisan db:seed</b>
+    5. <b>docker-compose exec app php npm install</b>
 9. Dále je potřeba zapnout vite server příkazem <b>docker-compose exec app npm run dev</b>
 10. Aplikace by měla být viditelná na adrese [localhost](http://localhost)
 11. V případě chybové hlášky typu permissions denied spustit příkaz <b>docker-compose exec app php artisan:optimize</b>, který vymaže starou cache aplikace
+
+### Přístupové údaje ###
+
+#### DB #### 
+
+    username: user
+    heslo: user
+
+#### Administrace ####
+Super administrator
+
+    email: admin@admin.com
+    heslo: 123456qQ
+
+Administrator
+    
+    email: administrator@administrator.com  
+    heslo: 123456qQ
+
+Editor
+    
+    email: editor@editor.com
+    heslo: 123456qQ
+
+#### Aplikace ####
+
+    email: user@user.com
+    heslo: 123456qQ
+
+### Role ###
+
+Super administrator
++ Má přístup ke všem modulům administrace
++ Má právo vykonávat všechny operace v administraci
+
+Administrator
++ Má přístup ke všem modulům kromě správy uživatelů
+
+Editor
++ Má přístup pouze k zápasům, které mu byly přiděleny
+
+User
++ Pouze přístup do uživatelské části
++ Může si přidávat zápasy do oblíbených
 

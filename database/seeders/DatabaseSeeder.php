@@ -25,13 +25,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-       /*$this->createUsers();
+       $this->createUsers();
        $this->createSports();
        $this->createCountries();
        $this->createReferees();
        $this->createStadiums();
        $this->createLeagues();
-       $this->createSeasons();*/
+       $this->createSeasons();
        $this->createPlayers();
        $this->createMatches();
     }
@@ -45,6 +45,30 @@ class DatabaseSeeder extends Seeder
         $superAdmin->password = Hash::make('123456qQ');
         $superAdmin->access = Role::SUPER_ADMINISTRATOR;
         $superAdmin->save();
+
+        $admin = new User();
+        $admin->first_name = 'Administrator';
+        $admin->last_name = 'Administrator';
+        $admin->email = 'admininistrator@admininistrator.com';
+        $admin->password = Hash::make('123456qQ');
+        $admin->access = Role::ADMINISTRATOR;
+        $admin->save();
+
+        $editor = new User();
+        $editor->first_name = 'Editor';
+        $editor->last_name = 'Editor';
+        $editor->email = 'editor@editor.com';
+        $editor->password = Hash::make('123456qQ');
+        $editor->access = Role::EDITOR;
+        $editor->save();
+
+        $user = new User();
+        $user->first_name = 'User';
+        $user->last_name = 'User';
+        $user->email = 'user@user.com';
+        $user->password = Hash::make('123456qQ');
+        $user->access = Role::USER;
+        $user->save();
 
         User::factory(100)->create();
     }
