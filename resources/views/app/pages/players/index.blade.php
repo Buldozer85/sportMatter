@@ -29,10 +29,13 @@
                                             </tr>
                                             </thead>
                                             <tbody class="divide-y divide-gray-800">
-                                            @foreach($player->transfers as $team)
+                                            @foreach($transfers as $transfer)
+                                                @php
+                                                    $team = \App\Modules\Teams\Models\Team::query()->find($transfer->team_id)
+                                                @endphp
                                                 <tr>
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $team->name }}</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ \Carbon\Carbon::createFromDate($team->pivot->date_of_transfer)->format('j.n.Y') }}</td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ \Carbon\Carbon::createFromDate($transfer->date_of_transfer)->format('j.n.Y') }}</td>
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">    <a href="{{ route('team.detail', $team->id) }}">Detail</a></td>
 
 
