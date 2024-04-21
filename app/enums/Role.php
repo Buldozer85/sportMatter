@@ -10,4 +10,9 @@ enum Role: string
     case EDITOR = 'editor';
 
     case USER = 'user';
+
+    public function isAboveEditor()
+    {
+        return in_array($this, [self::SUPER_ADMINISTRATOR, self::ADMINISTRATOR]);
+    }
 }
