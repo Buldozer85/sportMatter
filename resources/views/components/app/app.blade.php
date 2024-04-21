@@ -170,21 +170,21 @@
     <div class="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
         <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
             <div class="pb-6">
-                <a href="#" class="text-sm leading-6">Hokej</a>
+                <a href="{{ route('hockey.index') }}" class="text-sm leading-6">Hokej</a>
             </div>
             <div class="pb-6">
-                <a href="#" class="text-sm leading-6">Fotbal</a>
+                <a href="{{ route('football.index') }}" class="text-sm leading-6">Fotbal</a>
             </div>
             <div class="pb-6">
-                <a href="#" class="text-sm leading-6">Šipky</a>
+                <a href="{{ route('dart.index') }}" class="text-sm leading-6">Šipky</a>
             </div>
             @guest
                 <div class="pb-6">
-                    <a href="#" class="text-sm leading-6">Přihlášení</a>
+                    <a href="{{ route('app.show-login') }}" class="text-sm leading-6">Přihlášení</a>
                 </div>
 
                 <div class="pb-6">
-                    <a href="#" class="text-sm leading-6">Registrace</a>
+                    <a href="{{ route('app.show-register') }}" class="text-sm leading-6">Registrace</a>
                 </div>
             @endguest
 

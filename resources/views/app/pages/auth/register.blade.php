@@ -1,13 +1,13 @@
 <x-app.app title="Registrace">
-    <div class="flex min-h-screen mx-auto max-w-screen-2xl mt-12">
-        <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-            <div class="mx-auto w-full max-w-sm lg:w-96">
+    <div class="flex min-h-screen mx-auto max-w-screen-2xl pt-12 pb-12">
+        <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24 bg-white">
+            <div class="mx-auto w-full max-w-sm lg:w-96 ">
                 <div>
                     <img class="h-10 w-auto" src="{{ asset('img/logo-no-background.svg') }}" alt="SportMatter">
                     <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Vytvoř si účet</h2>
                 </div>
 
-                <div class="mt-10">
+                <div class="mt-10 ">
                     <div>
                         <form action="{{ route('app.register') }}" method="POST" class="space-y-6">
                             @csrf
@@ -24,14 +24,6 @@
                                 <x-app.forms.input name="password" id="password" label="Heslo" type="password" required></x-app.forms.input>
 
                                 <x-app.forms.input name="password_confirmation" id="password_confirmation" label="Heslo znovu" type="password" required></x-app.forms.input>
-                            </div>
-
-
-
-                            <div class="flex items-center justify-between">
-                                <div class="text-sm leading-6">
-                                    <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Zapomněli jste heslo?</a>
-                                </div>
                             </div>
 
                             <div>
