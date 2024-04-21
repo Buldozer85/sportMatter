@@ -46,7 +46,7 @@
                 </div>
             </form>
 
-            <div class="text-white" x-show="selectedTab == 'favoriteMatches'">
+            <div class="text-white space-y-4" x-show="selectedTab == 'favoriteMatches'">
                 @foreach(user()->favoriteMatches as $match)
                     <x-app.matches.matchesContainer date="{{ $match->date_of_match->format('d.n.Y') }}" day_name="{{ getDayName($match->date_of_match) }}" name_of_league="{{ $match->league->name }}" img_src="img/football-ball-soccer-svgrepo-com.png">
                     <x-app.matches.match time="{{ $match->date_of_match->format('H:i') }}"

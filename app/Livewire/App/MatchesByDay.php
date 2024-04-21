@@ -73,8 +73,7 @@ class MatchesByDay extends Component
 
 
 
-            $this->hasNextMatches = !is_null($nextDatesLeagues);
-
+            $this->hasNextMatches = !is_null($nextDatesLeagues) && !is_null($nextDatesLeagues->matches()->whereDate('date_of_match', '>', $this->date->format('Y-m-d'))->orderBy('date_of_match')->first());
 
         }
     }
@@ -91,7 +90,7 @@ class MatchesByDay extends Component
         }
 
 
-        $this->date = $nextDatesLeagues->matches->first()->date_of_match;
+        $this->date = $nextDatesLeagues->matches()->whereDate('date_of_match', '>', $this->date->format('Y-m-d'))->orderBy('date_of_match')->first()->date_of_match;
         $this->inputDate = $this->date->format('Y-m-d');
 
         $this->leaguesWithMatches = League::query()->whereHas('matches', function (Builder $query) {
