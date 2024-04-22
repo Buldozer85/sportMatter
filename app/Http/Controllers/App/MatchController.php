@@ -12,6 +12,7 @@ class MatchController extends Controller
         $homeActions = $game->getMeta(\App\enums\FootballParameters::ACTIONS_HOME->value);
 
         $awayActions = $game->getMeta(\App\enums\FootballParameters::ACTIONS_AWAY->value);
+
         return view('app.pages.matches.index')->with(['match' => $game, 'homeActions' => $homeActions, 'awayActions' => $awayActions]);
     }
 

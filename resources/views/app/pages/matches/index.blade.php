@@ -65,7 +65,15 @@
 
                 @if($match->league->sport->name === 'Hokej')
                         <x-slot name="overview">
-
+                            @foreach($match->getMeta('actions') as $key => $minuteActions)
+                                @foreach($minuteActions as $action)
+                                        @if($action['type'] == 'home')
+                                            <x-app.matches.homeParticipant minute="{{ $key }}" action_image="img/football-ball-soccer-svgrepo-com.png" player_name="{{ $action['player'] }}"/>
+                                        @else
+                                            <x-app.matches.awayParticipant minute="{{ $key }}" action_image="img/football-ball-soccer-svgrepo-com.png" player_name="{{ $action['player'] }}"/>
+                                        @endif
+                                @endforeach
+                            @endforeach
 
                         </x-slot>
 

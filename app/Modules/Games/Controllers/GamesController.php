@@ -51,7 +51,7 @@ final class GamesController extends Controller
 
                 $homePoints = MatchResults::from(intval($request->get('darts_result_first_player')));
 
-                $prePoints =  $season->teams->where('id', '=', $game->home_team_id)->first()->pivot->score;
+                $prePoints =  $season->teams->where('id', '=', $game->home_team_id)->first()?->pivot?->score;
 
                 $season->teams()->updateExistingPivot($game->home_team_id, ['points' => $prePoints + $homePoints->points()]);
 
@@ -212,7 +212,7 @@ final class GamesController extends Controller
 
                 ksort($params['hockey_actions_away']);
 
-                $params['actions'] = array_replace($params['hockey_actions_home'], $params['hockey_actions_away']);
+                $params['actions'] = merge_arrays_preserve_keys($params['hockey_actions_home'], $params['hockey_actions_away']);
 
                 ksort($params['actions']);
 
@@ -359,6 +359,7 @@ final class GamesController extends Controller
                 }
 
                 ksort($params['actions_away']);
+
                 $params['actions'] = merge_arrays_preserve_keys($params['actions_home'], $params['actions_away']);
 
 
@@ -424,6 +425,8 @@ final class GamesController extends Controller
                     ];
                 }
 
+
+
                 ksort($params['hockey_actions_home']);
 
                 $awayPlayersWithAction = $request->get('hockey_players_away');
@@ -442,7 +445,7 @@ final class GamesController extends Controller
 
                 ksort($params['hockey_actions_away']);
 
-                $params['actions'] = array_replace($params['hockey_actions_home'], $params['hockey_actions_away']);
+                $params['actions'] = merge_arrays_preserve_keys($params['hockey_actions_home'], $params['hockey_actions_away']);
 
                 ksort($params['actions']);
 
