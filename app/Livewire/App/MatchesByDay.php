@@ -34,7 +34,7 @@ class MatchesByDay extends Component
 
         $this->leaguesWithMatches = League::query()
             ->whereHas('matches', function (Builder $query) {
-                $query->where('date_of_match', '=',  $this->date->format('Y-m-d'));
+                $query->whereDate('date_of_match', '=',  $this->date->format('Y-m-d'));
             })
             ->where('sport_id', '=', $this->sport)
             ->get();
